@@ -1,0 +1,77 @@
+import type { Certificate } from "@/types";
+
+export const certificates: Certificate[] = [
+  {
+    id: "fcc-frontend-libraries",
+    title: "Front End Development Libraries",
+    issuer: "freeCodeCamp",
+    date: "June 29, 2024",
+    summary:
+      "Built interactive UIs with modern front-end libraries — component architecture, state management, and polished styling across multiple production-style projects.",
+    effort: "≈ 300 hours of coursework & projects",
+    highlights: [
+      "Component-driven interfaces with React",
+      "Application state patterns with Redux",
+      "Responsive layouts using Bootstrap & Sass",
+      "Hands-on projects validating real UI flows",
+    ],
+    skills: ["React", "Redux", "Bootstrap", "Sass", "jQuery"],
+    image: "/certificates/freecodecamp-frontend.png",
+    verificationUrl:
+      "https://freecodecamp.org/certification/Omar_Elbedwehy/front-end-development-libraries",
+  },
+  {
+    id: "fcc-backend-apis",
+    title: "Back End Development and APIs",
+    issuer: "freeCodeCamp",
+    date: "August 14, 2024",
+    summary:
+      "Designed and shipped Node/Express services with REST endpoints, data persistence, and the packaging/runtime habits used in real backend work.",
+    effort: "≈ 300 hours of coursework & projects",
+    highlights: [
+      "HTTP APIs and routing with Express",
+      "Server-side JavaScript with Node.js",
+      "Document storage patterns with MongoDB",
+      "npm-based project structure and tooling",
+    ],
+    skills: ["Node.js", "Express", "MongoDB", "REST APIs", "npm"],
+    image: "/certificates/freecodecamp-backend.png",
+    verificationUrl:
+      "https://freecodecamp.org/certification/Omar_Elbedwehy/back-end-development-and-apis",
+  },
+  {
+    id: "meta-programming-js",
+    title: "Programming with JavaScript",
+    issuer: "Meta · Coursera",
+    date: "June 8, 2025",
+    summary:
+      "Strengthened core JavaScript foundations — language mechanics, DOM work, object-oriented patterns, and testing discipline authorized by Meta.",
+    effort: "Meta-authorized Coursera course",
+    highlights: [
+      "Modern JavaScript syntax and ES6+ features",
+      "DOM interaction and browser APIs",
+      "Object-oriented programming in JS",
+      "Unit testing habits for reliable code",
+    ],
+    skills: ["JavaScript", "ES6+", "DOM", "Testing", "Object-oriented JS"],
+    image: "/certificates/meta-programming-with-javascript.jpg",
+    verificationUrl: "https://coursera.org/verify/957EW6F4VKCZ",
+    credentialId: "957EW6F4VKCZ",
+  },
+  {
+    id: "thm-advent-of-cyber-2025",
+    title: "Advent of Cyber 2025",
+    issuer: "TryHackMe",
+    date: "2025",
+    summary:
+      "Completed TryHackMe Advent of Cyber 2025 — hands-on labs covering practical cybersecurity topics across the holiday challenge series.",
+    effort: "Advent of Cyber challenge track",
+    highlights: [
+      "Daily hands-on security labs",
+      "Offensive and defensive techniques practice",
+      "Real-world style attack/defense scenarios",
+    ],
+    skills: ["Cybersecurity", "TryHackMe", "Hands-on labs"],
+    image: "/certificates/THM-Advent-Of-Cyber-2025.jpg",
+  },
+];
