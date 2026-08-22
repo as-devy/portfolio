@@ -84,6 +84,7 @@ const lucideIconMap: Partial<Record<SkillIconId, LucideIcon>> = {
   testing: TestTube2,
   performance: Gauge,
   sql: Table2,
+  rabbitmq: MessageSquareCode,
   ai: Sparkles,
   agents: Bot,
   rag: Network,

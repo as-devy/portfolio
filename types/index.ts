@@ -53,6 +53,7 @@ export type SkillIcon =
   | "api"
   | "graphql"
   | "websocket"
+  | "rabbitmq"
   | "security"
   | "auth"
   | "owasp"

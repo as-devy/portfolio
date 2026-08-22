@@ -5,42 +5,42 @@ export const skillCategories: Array<{
   label: string;
   blurb: string;
 }> = [
-  {
-    id: "design",
-    label: "Design",
-    blurb: "Structure, clarity, and craft in the product surface.",
-  },
-  {
-    id: "frontend",
-    label: "Frontend",
-    blurb: "Languages, libraries, and frameworks for building modern web interfaces.",
-  },
-  {
-    id: "backend",
-    label: "Backend",
-    blurb: "APIs, server-side logic, and services that power the product.",
-  },
-  {
-    id: "data",
-    label: "Data",
-    blurb: "Persistence, queries, and application data flows.",
-  },
-  {
-    id: "security",
-    label: "Security",
-    blurb: "Auth, API hardening, and secure-by-default delivery habits.",
-  },
-  {
-    id: "devops",
-    label: "DevOps & CI/CD",
-    blurb: "Version control, pipelines, and portable runtime environments.",
-  },
-  {
-    id: "ai",
-    label: "AI Engineering",
-    blurb: "Integrating intelligent capabilities into modern web applications.",
-  },
-];
+    {
+      id: "design",
+      label: "Design",
+      blurb: "Structure, clarity, and craft in the product surface.",
+    },
+    {
+      id: "frontend",
+      label: "Frontend",
+      blurb: "Languages, libraries, and frameworks for building modern web interfaces.",
+    },
+    {
+      id: "backend",
+      label: "Backend",
+      blurb: "APIs, server-side logic, and services that power the product.",
+    },
+    {
+      id: "data",
+      label: "Data",
+      blurb: "Persistence, queries, and application data flows.",
+    },
+    {
+      id: "security",
+      label: "Security",
+      blurb: "Auth, API hardening, and secure-by-default delivery habits.",
+    },
+    {
+      id: "devops",
+      label: "DevOps & CI/CD",
+      blurb: "Version control, pipelines, and portable runtime environments.",
+    },
+    {
+      id: "ai",
+      label: "AI Engineering",
+      blurb: "Integrating intelligent capabilities into modern web applications.",
+    },
+  ];
 
 export const stackJourney: Array<{ id: SkillLayer; label: string }> = [
   { id: "design", label: "Design" },
@@ -284,17 +284,6 @@ export const skills: SkillNode[] = [
     map: { x: 55, y: 54 },
   },
   {
-    id: "websockets",
-    label: "WebSockets / Event-driven",
-    category: "backend",
-    layer: "backend",
-    role: "Realtime",
-    icon: "websocket",
-    description: "Realtime and event-driven patterns for live updates and async workflows.",
-    related: ["node", "express", "rest", "graphql"],
-    map: { x: 55, y: 64 },
-  },
-  {
     id: "prisma",
     label: "Prisma ORM",
     category: "backend",
@@ -304,6 +293,17 @@ export const skills: SkillNode[] = [
     description: "Type-safe ORM for modeling schemas and querying databases from Node apps.",
     related: ["pg", "sql", "node", "express"],
     map: { x: 55, y: 74 },
+  },
+  {
+    id: "rabbitmq",
+    label: "Event-driven Architecture / RabbitMQ",
+    category: "backend",
+    layer: "backend",
+    role: "Messaging",
+    icon: "rabbitmq",
+    description: "Message-driven architecture for reliable async workflows and service communication.",
+    related: ["node", "express", "rest", "docker"],
+    map: { x: 55, y: 84 },
   },
 
   // Data

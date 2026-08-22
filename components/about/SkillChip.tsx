@@ -211,7 +211,7 @@ export function SkillChip({ skill, className, compact = false }: SkillChipProps)
         />
       </span>
 
-      <span className="relative z-[1] min-w-0 truncate pr-6 text-sm text-foreground/95 transition-colors duration-500 group-hover:text-white/95">
+      <span className="relative z-[1] min-w-0 break-words text-sm leading-tight text-foreground/95 transition-colors duration-500 group-hover:text-white/95">
         {skill.label}
       </span>
     </div>

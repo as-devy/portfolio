@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   ArrowLeft,
   ArrowRight,
@@ -21,9 +21,28 @@ const AUTO_SLIDE_MS = 12000;
 
 export function Projects() {
   const reduceMotion = useReducedMotion();
+  const projectsRef = useRef<HTMLElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
+  const [hasEnteredProjects, setHasEnteredProjects] = useState(false);
   const [direction, setDirection] = useState(1);
+
+  useEffect(() => {
+    const section = projectsRef.current;
+    if (!section || reduceMotion || hasEnteredProjects) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setHasEnteredProjects(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.2 },
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, [hasEnteredProjects, reduceMotion]);
 
   const goToIndex = useCallback(
     (index: number) => {
@@ -48,23 +67,23 @@ export function Projects() {
   );
 
   useEffect(() => {
-    if (reduceMotion || projects.length < 2) return;
+    if (!hasEnteredProjects || reduceMotion || projects.length < 2) return;
 
     const timer = window.setInterval(() => {
-      if (paused || document.hidden) return;
+      if (document.hidden) return;
       setDirection(1);
       setActiveIndex((current) => (current + 1) % projects.length);
     }, AUTO_SLIDE_MS);
 
     return () => window.clearInterval(timer);
-  }, [paused, reduceMotion]);
+  }, [hasEnteredProjects, reduceMotion]);
 
   const project = projects[activeIndex];
 
   if (!project) return null;
 
   return (
-    <section id="projects" className="relative overflow-hidden">
+    <section ref={projectsRef} id="projects" className="relative overflow-hidden">
       <div className="projects-shell">
         <div className="mb-8 flex flex-col gap-6 md:mb-10 md:flex-row md:items-end md:justify-between">
           <SectionHeading
@@ -118,16 +137,6 @@ export function Projects() {
 
           <div
             className="relative overflow-hidden"
-            onMouseEnter={() => setPaused(true)}
-            onMouseLeave={() => setPaused(false)}
-            onFocusCapture={() => setPaused(true)}
-            onBlurCapture={(event) => {
-              if (
-                !event.currentTarget.contains(event.relatedTarget as Node | null)
-              ) {
-                setPaused(false);
-              }
-            }}
             onKeyDown={(event) => {
               if (event.key === "ArrowRight") stepBy(1);
               if (event.key === "ArrowLeft") stepBy(-1);
@@ -170,7 +179,7 @@ export function Projects() {
                     }}
                   />
 
-                  {!reduceMotion && !paused ? (
+                  {hasEnteredProjects && !reduceMotion ? (
                     <span
                       key={`${project.id}-${activeIndex}-progress`}
                       className="project-auto-progress absolute inset-x-0 top-0 z-20 h-[2px] origin-left bg-gradient-to-r from-accent via-sky-400 to-violet-400"

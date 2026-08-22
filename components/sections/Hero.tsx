@@ -47,16 +47,14 @@ export function Hero() {
             </p>
 
             <p className="lede mt-6 max-w-lg">
-              I design and build full-stack web products where visual craft,
-              system architecture, and careful interaction meet — while deepening
-              practical web security thinking along the way.
+              I design and build full-stack web products where UI/UX, system architecture, and engineering precision come together — with a strong focus on performance, scalability, and web security.
             </p>
 
             <ul className="mt-7 flex flex-wrap gap-2" aria-label="Focus areas">
               {roles.map((role) => (
                 <li
                   key={role}
-                  className="rounded-full border border-border bg-white/[0.02] px-3.5 py-1.5 font-mono text-[0.72rem] tracking-wide text-muted"
+                  className="role-pill rounded-full px-3.5 py-1.5 font-mono text-[0.72rem] tracking-wide"
                 >
                   {role}
                 </li>

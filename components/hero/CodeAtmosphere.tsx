@@ -1,17 +1,41 @@
-import {
-  atmosphereSnippets,
-  atmosphereSymbols,
-  fallingGlyphs,
-} from "@/data/hero-atmosphere";
-import { highlightCodeLine } from "@/lib/highlight-code";
+"use client";
 
-/**
- * Pure background layer — JS/TS snippets scattered across the hero.
- * Edit data/hero-atmosphere.ts to change copy or positions.
- */
+import { useEffect, useRef } from "react";
+import { atmosphereSymbols } from "@/data/hero-atmosphere";
+
+const symbolZones = [
+  { top: [6, 28], left: [3, 22] },
+  { top: [8, 30], left: [76, 96] },
+  { top: [62, 92], left: [4, 25] },
+  { top: [64, 94], left: [74, 96] },
+  { top: [18, 84], left: [58, 78] },
+] as const;
+
+function randomPercent([min, max]: readonly [number, number]) {
+  return `${Math.round(min + Math.random() * (max - min))}%`;
+}
+
+/** Decorative symbol layer behind the hero content. */
 export function CodeAtmosphere() {
+  const atmosphereRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const symbolElements = atmosphereRef.current?.querySelectorAll<HTMLElement>(
+      "[data-hero-symbol]",
+    );
+    if (!symbolElements) return;
+
+    symbolElements.forEach((element, index) => {
+      const zone = symbolZones[index % symbolZones.length];
+      element.style.top = randomPercent(zone.top);
+      element.style.left = randomPercent(zone.left);
+      element.style.bottom = "auto";
+      element.style.right = "auto";
+    });
+  }, []);
+
   return (
-    <div className="code-atmosphere" aria-hidden>
+    <div ref={atmosphereRef} className="code-atmosphere" aria-hidden>
       <div
         className="absolute inset-0 opacity-40"
         style={{
@@ -23,57 +47,11 @@ export function CodeAtmosphere() {
         }}
       />
 
-      {fallingGlyphs.map((glyph) => (
-        <span
-          key={glyph.id}
-          className="code-fall"
-          style={{
-            left: glyph.left,
-            animationDelay: glyph.delay,
-            animationDuration: glyph.duration,
-          }}
-        >
-          {glyph.char}
-        </span>
-      ))}
-
-      {atmosphereSnippets.map((snippet) => (
-        <div
-          key={snippet.id}
-          className="code-snippet code-snippet-typing"
-          style={{
-            top: snippet.top,
-            bottom: snippet.bottom,
-            left: snippet.left,
-            right: snippet.right,
-            ["--snippet-delay" as string]: snippet.delay,
-            ["--snippet-duration" as string]: snippet.duration,
-          }}
-        >
-          <div className="code-file-label">
-            <span className={`code-lang-badge ${snippet.lang}`}>
-              {snippet.lang}
-            </span>
-            {snippet.file}
-          </div>
-          {snippet.lines.map((line, index) => (
-            <div
-              key={`${snippet.id}-${index}`}
-              className="code-type-line"
-              style={{
-                animationDelay: `calc(var(--snippet-delay) + ${index * 0.45}s)`,
-                animationDuration: "var(--snippet-duration)",
-              }}
-              dangerouslySetInnerHTML={{ __html: highlightCodeLine(line) }}
-            />
-          ))}
-        </div>
-      ))}
-
       {atmosphereSymbols.map((symbol) => (
         <span
           key={symbol.id}
-          className="float-symbol text-lg md:text-2xl"
+          data-hero-symbol
+          className="float-symbol text-xl md:text-3xl"
           style={{
             top: symbol.top,
             bottom: symbol.bottom,

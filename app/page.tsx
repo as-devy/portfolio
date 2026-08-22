@@ -34,6 +34,14 @@ export default function Home() {
                 jobTitle: siteConfig.role,
                 email: `mailto:${siteConfig.email}`,
                 image: `${siteConfig.url}${siteConfig.heroImage.src}`,
+                knowsAbout: [
+                  "Full-stack web development",
+                  "UI/UX design",
+                  "Web security",
+                  "Blue Team detection and incident response",
+                  "Event-driven architecture",
+                  "RabbitMQ",
+                ],
                 sameAs: ["https://github.com/as-devy"],
               },
               {
@@ -64,10 +72,15 @@ export default function Home() {
                     "@type": "CreativeWork",
                     name: project.name,
                     description: project.description,
-                    url: project.liveUrl,
+                    ...(project.liveUrl || project.briefUrl
+                      ? { url: project.liveUrl || `${siteConfig.url}${project.briefUrl}` }
+                      : {}),
                     image: project.image
                       ? `${siteConfig.url}${project.image}`
                       : undefined,
+                    author: { "@id": `${siteConfig.url}/#person` },
+                    dateCreated: project.year,
+                    genre: project.category,
                     keywords: project.technologies.join(", "),
                   },
                 })),
