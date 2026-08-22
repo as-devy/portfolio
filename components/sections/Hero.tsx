@@ -11,7 +11,7 @@ import {
 const roles = [
   "Full Stack Developer",
   "UI/UX Designer",
-  "Web Security learner",
+  "Web Security",
 ];
 
 export function Hero() {

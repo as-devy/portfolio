@@ -15,9 +15,11 @@ const socialIcons = {
 } as const;
 
 export function Contact() {
-  const [status, setStatus] = useState<"idle" | "sent">("idle");
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">(
+    "idle",
+  );
 
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.currentTarget;
     const data = new FormData(form);
@@ -25,14 +27,34 @@ export function Contact() {
     const email = String(data.get("email") ?? "");
     const message = String(data.get("message") ?? "");
 
-    const subject = encodeURIComponent(`Portfolio inquiry from ${name}`);
-    const body = encodeURIComponent(
-      `${message}\n\n— ${name}\n${email}`,
-    );
+    setStatus("sending");
 
-    window.location.href = `mailto:${siteConfig.email}?subject=${subject}&body=${body}`;
-    setStatus("sent");
-    form.reset();
+    try {
+      const response = await fetch(
+        `https://formsubmit.co/ajax/${siteConfig.email}`,
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name,
+            email,
+            message,
+            _subject: `Portfolio inquiry from ${name}`,
+            _template: "table",
+          }),
+        },
+      );
+
+      if (!response.ok) throw new Error("Unable to send message");
+
+      setStatus("sent");
+      form.reset();
+    } catch {
+      setStatus("error");
+    }
   };
 
   return (
@@ -137,15 +159,24 @@ export function Contact() {
                   />
                 </label>
 
-                <button type="submit" className="btn btn-primary w-full">
-                  Send message
+                <button
+                  type="submit"
+                  disabled={status === "sending"}
+                  className="btn btn-primary w-full disabled:cursor-wait disabled:opacity-60"
+                >
+                  {status === "sending" ? "Sending..." : "Send message"}
                   <ArrowUpRight className="h-4 w-4" />
                 </button>
 
-                <p className="mt-4 text-center font-mono text-[0.68rem] text-subtle">
+                <p
+                  className="mt-4 text-center font-mono text-[0.68rem] text-subtle"
+                  aria-live="polite"
+                >
                   {status === "sent"
-                    ? "Opening your email client…"
-                    : `Direct: ${siteConfig.email}`}
+                    ? "Message sent successfully."
+                    : status === "error"
+                      ? "Message could not be sent. Please try again."
+                      : `Direct: ${siteConfig.email}`}
                 </p>
               </form>
             </Reveal>

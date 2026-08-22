@@ -1,36 +1,114 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Omar Elbedwehy — Portfolio
 
-## Getting Started
+> A personal portfolio focused on full-stack engineering, UI/UX design, web security, and modern web technologies.
 
-First, run the development server:
+🌐 **Live:** [omar-elbedwehy.vercel.app](https://omar-elbedwehy.vercel.app/)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Overview
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+This repository contains my personal developer portfolio — a digital representation of how I approach product development across interface design, application architecture, security, and emerging AI technologies.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Rather than presenting my skills as a simple technology list, the portfolio is structured around four layers:
 
-## Learn More
+- **Interface** — UI/UX and frontend engineering
+- **System** — Backend, APIs, and data
+- **Delivery** — Security, DevOps, and CI/CD
+- **Intelligence** — AI engineering and intelligent application features
 
-To learn more about Next.js, take a look at the following resources:
+The goal is to bring design, engineering, and security thinking together into one cohesive experience.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Tech Stack
 
-## Deploy on Vercel
+### Frontend
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- Framer Motion
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### UI / UX
+
+- Figma
+- Responsive design
+- Accessibility
+- Interaction design
+- Motion design
+
+### Development
+
+- TypeScript
+- JavaScript
+- React
+- Next.js
+- Node.js
+
+### Deployment
+
+- Vercel
+- Git
+- GitHub
+
+---
+
+## Design Philosophy
+
+The portfolio follows a system-oriented visual language rather than a conventional portfolio layout.
+
+### Engineered Interface
+
+The interface combines:
+
+- Minimal typography
+- Technical visual elements
+- Motion and interaction
+- Layered information architecture
+- Responsive layouts
+- Progressive content disclosure
+
+The visual direction is intentionally inspired by engineering systems, interfaces, and developer tooling while remaining focused on usability.
+
+---
+
+## Portfolio Structure
+
+```text
+Portfolio
+│
+├── Hero
+│   ├── Identity
+│   ├── Positioning
+│   └── Primary actions
+│
+├── Identity
+│   ├── Full-stack thinking
+│   ├── Product & UI/UX
+│   └── Security mindset
+│
+├── Stack Journey
+│   ├── Interface
+│   │   ├── Design
+│   │   └── Frontend
+│   │
+│   ├── System
+│   │   ├── Backend
+│   │   └── Data
+│   │
+│   ├── Delivery
+│   │   ├── Security
+│   │   └── DevOps / CI/CD
+│   │
+│   └── Intelligence
+│       └── AI Engineering
+│
+├── Selected Work
+│
+├── Credentials
+│
+├── Contact
+│
+└── Footer
