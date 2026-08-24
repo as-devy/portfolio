@@ -70,6 +70,28 @@
     "credentialId": "957EW6F4VKCZ"
   },
   {
+    "id": "meta-html-css-in-depth",
+    "title": "HTML and CSS in depth",
+    "issuer": "Meta · Coursera",
+    "date": "June 10, 2025",
+    "summary": "Built a deeper foundation in HTML and CSS, including semantic structure, responsive layouts, and modern styling techniques authorized by Meta.",
+    "effort": "Meta-authorized Coursera course",
+    "highlights": [
+      "Semantic HTML and accessible page structure",
+      "Responsive layouts with modern CSS",
+      "Advanced selectors and styling patterns",
+      "Web presentation principles for production interfaces"
+    ],
+    "skills": [
+      "HTML",
+      "CSS",
+      "Responsive design",
+      "Accessibility",
+      "Web design"
+    ],
+    "image": "/certificates/html-css-in-depth.jpg"
+  },
+  {
     "id": "thm-advent-of-cyber-2025",
     "title": "Advent of Cyber 2025",
     "issuer": "TryHackMe",
