@@ -164,7 +164,7 @@ export function Certificates({
                             ) : null}
                           </div>
 
-                          <div className="relative overflow-hidden rounded-xl border border-border bg-[linear-gradient(160deg,rgba(255,255,255,0.04),transparent_45%),#0a101c] p-3">
+                          <div className="relative self-start overflow-hidden rounded-xl border border-border bg-[linear-gradient(160deg,rgba(255,255,255,0.04),transparent_45%),#0a101c] p-3">
                             <a
                               href={certificate.image}
                               target="_blank"

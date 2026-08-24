@@ -20,7 +20,7 @@
       "jQuery"
     ],
     "image": "/certificates/freecodecamp-frontend.png",
-    "verificationUrl": "https://freecodecamp.org/certification/Omar_Elbedwehy/front-end-development-libraries"
+    "verificationUrl": "https://freecodecamp.org/certification/omar_elbedwehy/front-end-development-libraries"
   },
   {
     "id": "fcc-backend-apis",
@@ -43,7 +43,7 @@
       "npm"
     ],
     "image": "/certificates/freecodecamp-backend.png",
-    "verificationUrl": "https://freecodecamp.org/certification/Omar_Elbedwehy/back-end-development-and-apis"
+    "verificationUrl": "https://freecodecamp.org/certification/omar_elbedwehy/back-end-development-and-apis"
   },
   {
     "id": "meta-programming-js",
@@ -89,7 +89,9 @@
       "Accessibility",
       "Web design"
     ],
-    "image": "/certificates/html-css-in-depth.jpg"
+    "image": "/certificates/html-css-in-depth.jpg",
+    "verificationUrl": "https://coursera.org/verify/Q4F2YIYWB0B",
+    "credentialId": "Q4F2YIYWB0B"
   },
   {
     "id": "thm-advent-of-cyber-2025",
