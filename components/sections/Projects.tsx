@@ -25,6 +25,7 @@ export function Projects() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [hasEnteredProjects, setHasEnteredProjects] = useState(false);
   const [direction, setDirection] = useState(1);
+  const [isProjectHovered, setIsProjectHovered] = useState(false);
 
   useEffect(() => {
     const section = projectsRef.current;
@@ -67,7 +68,12 @@ export function Projects() {
   );
 
   useEffect(() => {
-    if (!hasEnteredProjects || reduceMotion || projects.length < 2) return;
+    if (
+      !hasEnteredProjects ||
+      reduceMotion ||
+      isProjectHovered ||
+      projects.length < 2
+    ) return;
 
     const timer = window.setInterval(() => {
       if (document.hidden) return;
@@ -76,7 +82,7 @@ export function Projects() {
     }, AUTO_SLIDE_MS);
 
     return () => window.clearInterval(timer);
-  }, [hasEnteredProjects, reduceMotion]);
+  }, [hasEnteredProjects, isProjectHovered, reduceMotion]);
 
   const project = projects[activeIndex];
 
@@ -170,6 +176,8 @@ export function Projects() {
                     ease: [0.22, 1, 0.36, 1],
                   }}
                   className="group relative overflow-hidden rounded-[1.6rem] border border-border bg-[#080c16]/80"
+                  onMouseEnter={() => setIsProjectHovered(true)}
+                  onMouseLeave={() => setIsProjectHovered(false)}
                 >
                   <div
                     aria-hidden
@@ -183,7 +191,10 @@ export function Projects() {
                     <span
                       key={`${project.id}-${activeIndex}-progress`}
                       className="project-auto-progress absolute inset-x-0 top-0 z-20 h-[2px] origin-left bg-gradient-to-r from-accent via-sky-400 to-violet-400"
-                      style={{ animationDuration: `${AUTO_SLIDE_MS}ms` }}
+                      style={{
+                        animationDuration: `${AUTO_SLIDE_MS}ms`,
+                        animationPlayState: isProjectHovered ? "paused" : "running",
+                      }}
                     />
                   ) : null}
 
