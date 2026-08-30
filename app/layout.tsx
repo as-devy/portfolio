@@ -59,18 +59,11 @@ export const metadata: Metadata = {
     title: siteConfig.title,
     description: siteConfig.description,
     siteName: `${siteConfig.name} Portfolio`,
-    images: [
-      {
-        url: siteConfig.heroImage.src,
-        alt: siteConfig.heroImage.alt,
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: siteConfig.title,
     description: siteConfig.description,
-    images: [siteConfig.heroImage.src],
   },
   robots: {
     index: true,
