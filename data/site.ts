@@ -9,7 +9,7 @@ export const siteConfig: SiteConfig = {
     "Omar Elbedwehy is a full-stack developer, UI/UX designer, and security-focused engineer building scalable web applications.",
   email: "omarelbedwehi@gmail.com",
   location: "Available worldwide",
-  url: "https://omar.dev",
+  url: "https://omar-elbedwehy.vercel.app",
   heroImage: {
     src: "/images/hero-img.jpg",
     alt: "Omar standing beside a vintage lamp post",

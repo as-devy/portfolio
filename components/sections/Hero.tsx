@@ -68,12 +68,15 @@ export function Hero() {
                   <ArrowDownRight className="h-4 w-4" />
                 </a>
               ) : null}
-              {secondaryTarget && secondaryTarget !== primaryTarget ? (
-                <a href={`#${secondaryTarget}`} className="btn btn-secondary">
-                  Start a conversation
-                  <ArrowUpRight className="h-4 w-4" />
-                </a>
-              ) : null}
+              <a
+                href="/docs/Omar%20Elbedwehy%20-%20CV.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-secondary"
+              >
+                View Resume
+                <ArrowUpRight className="h-4 w-4" />
+              </a>
             </div>
           </div>
 
