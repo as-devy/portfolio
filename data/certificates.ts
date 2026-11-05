@@ -2,6 +2,47 @@ import type { Certificate } from "@/types";
 
 export const certificates: Certificate[] = [
   {
+    id: "cs50x",
+    title: "CS50x: Introduction to Computer Science",
+    issuer: "HarvardX",
+    date: "2025",
+    summary:
+      "Completed Harvard's introduction to computer science, building a broad foundation across algorithms, data structures, abstraction, and software development.",
+    effort: "HarvardX computer science course",
+    highlights: [
+      "Algorithms and computational problem solving",
+      "Data structures and memory management",
+      "C, Python, SQL, HTML, CSS, and JavaScript",
+      "Web application development with Flask",
+    ],
+    skills: [
+      "C",
+      "Python",
+      "SQL",
+      "Algorithms",
+      "Data structures",
+      "Web development",
+    ],
+    image: "/certificates/CS50x.png",
+  },
+  {
+    id: "meta-frontend-developer",
+    title: "Meta Front-End Developer",
+    issuer: "Meta · Coursera",
+    date: "2025",
+    summary:
+      "Completed Meta's front-end development program, covering responsive interfaces, React applications, version control, and production-minded web development.",
+    effort: "Meta Professional Certificate",
+    highlights: [
+      "Responsive layouts with HTML and CSS",
+      "Interactive interfaces with JavaScript",
+      "React components and application development",
+      "Version control and front-end project workflows",
+    ],
+    skills: ["HTML", "CSS", "JavaScript", "React", "Responsive design", "Git"],
+    image: "/certificates/meta-frontend-developer.png",
+  },
+  {
     id: "fcc-frontend-libraries",
     title: "Front End Development Libraries",
     issuer: "freeCodeCamp",
@@ -73,5 +114,46 @@ export const certificates: Certificate[] = [
     ],
     skills: ["Cybersecurity", "TryHackMe", "Hands-on labs"],
     image: "/certificates/THM-Advent-Of-Cyber-2025.jpg",
+  },
+  {
+    id: "cs50x",
+    title: "CS50x: Introduction to Computer Science",
+    issuer: "HarvardX",
+    date: "2025",
+    summary:
+      "Completed Harvard's introduction to computer science, building a broad foundation across algorithms, data structures, abstraction, and software development.",
+    effort: "HarvardX computer science course",
+    highlights: [
+      "Algorithms and computational problem solving",
+      "Data structures and memory management",
+      "C, Python, SQL, HTML, CSS, and JavaScript",
+      "Web application development with Flask",
+    ],
+    skills: [
+      "C",
+      "Python",
+      "SQL",
+      "Algorithms",
+      "Data structures",
+      "Web development",
+    ],
+    image: "/certificates/CS50x.png",
+  },
+  {
+    id: "meta-frontend-developer",
+    title: "Meta Front-End Developer",
+    issuer: "Meta · Coursera",
+    date: "2025",
+    summary:
+      "Completed Meta's front-end development program, covering responsive interfaces, React applications, version control, and production-minded web development.",
+    effort: "Meta Professional Certificate",
+    highlights: [
+      "Responsive layouts with HTML and CSS",
+      "Interactive interfaces with JavaScript",
+      "React components and application development",
+      "Version control and front-end project workflows",
+    ],
+    skills: ["HTML", "CSS", "JavaScript", "React", "Responsive design", "Git"],
+    image: "/certificates/meta-frontend-developer.png",
   },
 ];

@@ -1,4 +1,52 @@
 [
+{
+  "id": "cs50x",
+  "title": "CS50x: Introduction to Computer Science",
+  "issuer": "HarvardX",
+  "date": "2025",
+  "summary": "Completed Harvard's introduction to computer science, building a broad foundation across algorithms, data structures, abstraction, and software development.",
+  "effort": "HarvardX computer science course",
+  "highlights": [
+    "Algorithms and computational problem solving",
+    "Data structures and memory management",
+    "C, Python, SQL, HTML, CSS, and JavaScript",
+    "Web application development with Flask"
+  ],
+  "skills": [
+    "C",
+    "Python",
+    "SQL",
+    "Algorithms",
+    "Data structures",
+    "Web development"
+  ],
+  "image": "/certificates/CS50x.png",
+  "verificationUrl": "https://cs50.harvard.edu/certificates/84458d91-6b33-4562-ac12-1a00cc9c53d8"
+},
+{
+  "id": "meta-frontend-developer",
+  "title": "Meta Front-End Developer",
+  "issuer": "Meta · Coursera",
+  "date": "2025",
+  "summary": "Completed Meta's front-end development program, covering responsive interfaces, React applications, version control, and production-minded web development.",
+  "effort": "Meta Professional Certificate",
+  "highlights": [
+    "Responsive layouts with HTML and CSS",
+    "Interactive interfaces with JavaScript",
+    "React components and application development",
+    "Version control and front-end project workflows"
+  ],
+  "skills": [
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "React",
+    "Responsive design",
+    "Git"
+  ],
+  "image": "/certificates/meta-frontend-developer.png",
+  "verificationUrl": "https://www.coursera.org/account/accomplishments/professional-cert/1K65LAEQDAZV"
+},
   {
     "id": "fcc-frontend-libraries",
     "title": "Front End Development Libraries",
@@ -44,54 +92,6 @@
     ],
     "image": "/certificates/freecodecamp-backend.png",
     "verificationUrl": "https://freecodecamp.org/certification/omar_elbedwehy/back-end-development-and-apis"
-  },
-  {
-    "id": "meta-programming-js",
-    "title": "Programming with JavaScript",
-    "issuer": "Meta · Coursera",
-    "date": "June 8, 2025",
-    "summary": "Strengthened core JavaScript foundations — language mechanics, DOM work, object-oriented patterns, and testing discipline authorized by Meta.",
-    "effort": "Meta-authorized Coursera course",
-    "highlights": [
-      "Modern JavaScript syntax and ES6+ features",
-      "DOM interaction and browser APIs",
-      "Object-oriented programming in JS",
-      "Unit testing habits for reliable code"
-    ],
-    "skills": [
-      "JavaScript",
-      "ES6+",
-      "DOM",
-      "Testing",
-      "Object-oriented JS"
-    ],
-    "image": "/certificates/meta-programming-with-javascript.jpg",
-    "verificationUrl": "https://coursera.org/verify/957EW6F4VKCZ",
-    "credentialId": "957EW6F4VKCZ"
-  },
-  {
-    "id": "meta-html-css-in-depth",
-    "title": "HTML and CSS in depth",
-    "issuer": "Meta · Coursera",
-    "date": "June 10, 2025",
-    "summary": "Built a deeper foundation in HTML and CSS, including semantic structure, responsive layouts, and modern styling techniques authorized by Meta.",
-    "effort": "Meta-authorized Coursera course",
-    "highlights": [
-      "Semantic HTML and accessible page structure",
-      "Responsive layouts with modern CSS",
-      "Advanced selectors and styling patterns",
-      "Web presentation principles for production interfaces"
-    ],
-    "skills": [
-      "HTML",
-      "CSS",
-      "Responsive design",
-      "Accessibility",
-      "Web design"
-    ],
-    "image": "/certificates/html-css-in-depth.jpg",
-    "verificationUrl": "https://coursera.org/verify/Q4F2YIYWB0B",
-    "credentialId": "Q4F2YIYWB0B"
   },
   {
     "id": "thm-advent-of-cyber-2025",
