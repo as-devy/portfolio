@@ -192,15 +192,19 @@ function CertificateSlide({
                     className="cert-preview group/preview"
                     aria-label={`Open ${certificate.title} certificate image`}
                   >
-                    <Image
-                      src={certificate.image}
-                      alt={`${certificate.title} — ${certificate.issuer}`}
-                      width={960}
-                      height={720}
-                      className="h-full w-full object-contain object-center transition duration-700 group-hover/preview:scale-[1.03]"
-                      sizes="(max-width: 768px) 100vw, 460px"
+                    <motion.div
+                      className="h-full w-full"
                       style={reduceMotion ? undefined : { scale: imageScale }}
-                    />
+                    >
+                      <Image
+                        src={certificate.image}
+                        alt={`${certificate.title} — ${certificate.issuer}`}
+                        width={960}
+                        height={720}
+                        className="h-full w-full object-contain object-center transition duration-700 group-hover/preview:scale-[1.03]"
+                        sizes="(max-width: 768px) 100vw, 460px"
+                      />
+                    </motion.div>
                     <span className="cert-preview-label">Open full certificate</span>
                   </a>
                 </div>
