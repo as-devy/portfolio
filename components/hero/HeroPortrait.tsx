@@ -23,7 +23,7 @@ export function HeroPortrait() {
             fill
             priority
             sizes="(max-width: 1024px) 22rem, 28rem"
-            className="object-cover"
+            className="object-cover brightness-[1.12] contrast-[1.05] saturate-[1.04]"
             style={{ objectPosition }}
           />
 
@@ -34,7 +34,7 @@ export function HeroPortrait() {
           />
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-[#05070d]/55 lg:to-[#05070d]/70"
+            className="pointer-events-none absolute inset-0 hidden bg-gradient-to-l from-transparent via-transparent to-[#05070d]/70 lg:block"
           />
           <div
             aria-hidden

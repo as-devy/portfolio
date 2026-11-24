@@ -1,7 +1,6 @@
 import type { Project } from "@/types";
 
 /**
- * Replace liveUrl / githubUrl / copy with your real project details.
  * Accent colors drive each case study's atmospheric tint.
  */
 export const projects: Project[] = [

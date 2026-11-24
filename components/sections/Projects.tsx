@@ -99,7 +99,7 @@ export function Projects() {
           />
 
           <Reveal variant="right" delayMs={160}>
-            <div className="flex shrink-0 items-center gap-3">
+            <div className="flex shrink-0 items-center gap-3 lg:pr-16">
               <div className="hidden items-center gap-1.5 sm:flex" aria-hidden>
                 {projects.map((item, index) => (
                   <button

@@ -64,8 +64,8 @@ export function FloatingNav({ items }: FloatingNavProps) {
     <nav
       aria-label="Primary"
       className={cn(
-        "fixed z-50 glass",
-        "bottom-4 left-1/2 w-[min(92vw,26rem)] -translate-x-1/2 rounded-2xl px-2 py-2",
+        "fixed z-50 glass floating-nav-enter",
+        "bottom-[max(1rem,env(safe-area-inset-bottom))] left-1/2 w-[min(92vw,26rem)] -translate-x-1/2 rounded-2xl px-2 py-2",
         "lg:bottom-auto lg:left-auto lg:right-5 lg:top-1/2 lg:w-auto lg:-translate-y-1/2 lg:translate-x-0 lg:rounded-[1.35rem] lg:px-2 lg:py-3",
       )}
     >

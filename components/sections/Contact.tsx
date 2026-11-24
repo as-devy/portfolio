@@ -26,6 +26,7 @@ export function Contact() {
     const name = String(data.get("name") ?? "");
     const email = String(data.get("email") ?? "");
     const message = String(data.get("message") ?? "");
+    const honey = String(data.get("_honey") ?? "");
 
     setStatus("sending");
 
@@ -42,6 +43,7 @@ export function Contact() {
             name,
             email,
             message,
+            _honey: honey,
             _subject: `Portfolio inquiry from ${name}`,
             _template: "table",
           }),
@@ -158,6 +160,16 @@ export function Contact() {
                     className="field"
                   />
                 </label>
+
+                {/* Honeypot: invisible to people, traps bots (FormSubmit _honey) */}
+                <input
+                  type="text"
+                  name="_honey"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  className="hidden"
+                />
 
                 <button
                   type="submit"

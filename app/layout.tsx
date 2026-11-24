@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Syne } from "next/font/google";
-import { DevToolsGuard } from "@/components/layout/DevToolsGuard";
 import { FloatingNav } from "@/components/layout/FloatingNav";
+import { ScrollProgress } from "@/components/layout/ScrollProgress";
 import { getVisibleNavigation } from "@/data/navigation";
 import { siteConfig } from "@/data/site";
 import { getSectionFlags } from "@/lib/section-flags";
@@ -77,10 +77,6 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-const devToolsEnabled = !["false", "0", "no", "off"].includes(
-  (process.env.DEV_TOOLS ?? "true").trim().toLowerCase(),
-);
-
 export default function RootLayout({ children }: LayoutProps<"/">) {
   const navItems = getVisibleNavigation(getSectionFlags());
 
@@ -90,7 +86,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} ${syne.variable} h-full antialiased`}
     >
       <body className="min-h-full font-sans text-foreground">
-        <DevToolsGuard enabled={devToolsEnabled} />
+        <ScrollProgress />
         <div className="site-bg" aria-hidden>
           <span className="site-orb site-orb-a" />
           <span className="site-orb site-orb-b" />
