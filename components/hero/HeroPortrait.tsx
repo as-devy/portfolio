@@ -9,7 +9,7 @@ export function HeroPortrait() {
   const { src, alt, objectPosition } = siteConfig.heroImage;
 
   return (
-    <div className="hero-portrait relative mx-auto w-full max-w-[22rem] lg:max-w-none">
+    <div className="hero-portrait relative mx-auto w-full max-w-[15rem] lg:max-w-none">
       <div
         aria-hidden
         className="atmosphere-glow pointer-events-none absolute -inset-6 rounded-[2rem] bg-[radial-gradient(ellipse_at_center,rgba(34,211,238,0.2),transparent_65%)] blur-2xl"

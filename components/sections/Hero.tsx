@@ -27,12 +27,12 @@ export function Hero() {
   return (
     <section
       id="home"
-      className="relative flex min-h-[100svh] flex-col overflow-hidden pt-16"
+      className="relative flex min-h-[100svh] flex-col overflow-hidden pt-10 lg:pt-16"
     >
       <CodeAtmosphere />
 
       <div className="section-shell relative z-10 flex w-full flex-1 flex-col !py-0">
-        <div className="grid flex-1 items-center gap-10 py-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-8 lg:py-10 xl:gap-14">
+        <div className="grid flex-1 items-center gap-7 py-6 lg:grid-cols-[1.1fr_0.9fr] lg:gap-8 lg:py-10 xl:gap-14">
           <div className="max-w-2xl">
             <Reveal variant="down" durationMs={700}>
               <p className="eyebrow mb-6">
@@ -54,13 +54,13 @@ export function Hero() {
             </Reveal>
 
             <Reveal variant="blur" delayMs={260} durationMs={850}>
-              <p className="lede mt-6 max-w-lg">
+              <p className="lede mt-5 max-w-lg lg:mt-6">
                 I design and build full-stack web products where UI/UX, system architecture, and engineering precision come together — with a strong focus on performance, scalability, and web security.
               </p>
             </Reveal>
 
             <Reveal variant="up" delayMs={340} durationMs={750}>
-              <ul className="mt-7 flex flex-wrap gap-2" aria-label="Focus areas">
+              <ul className="mt-6 flex flex-wrap gap-2 lg:mt-7" aria-label="Focus areas">
                 {roles.map((role) => (
                   <li
                     key={role}
@@ -73,7 +73,7 @@ export function Hero() {
             </Reveal>
 
             <Reveal variant="up" delayMs={420} durationMs={750}>
-              <div className="mt-9 flex flex-wrap gap-3">
+              <div className="mt-7 flex flex-wrap gap-3 lg:mt-9">
                 {primaryTarget ? (
                   <a href={`#${primaryTarget}`} className="btn btn-primary">
                     Explore the work
@@ -93,7 +93,7 @@ export function Hero() {
             </Reveal>
           </div>
 
-          <Reveal variant="scale" delayMs={220} durationMs={950} className="relative mt-2 lg:mt-0">
+          <Reveal variant="scale" delayMs={220} durationMs={950} className="relative order-first lg:order-none">
             <HeroPortrait />
           </Reveal>
         </div>
