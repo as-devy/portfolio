@@ -52,7 +52,7 @@ function Panel({ p, i, total }: { p: Project; i: number; total: number }) {
       {p.watermark ? (
         <Image aria-hidden src={p.watermark} alt="" width={172} height={139} className="pointer-events-none absolute right-16 top-[9%] z-0 w-[120px] opacity-[0.15] xl:right-28 xl:w-[140px]" />
       ) : null}
-      <div className="relative z-10 grid w-full max-w-[1440px] grid-cols-[minmax(0,27rem)_minmax(0,0.92fr)] items-center justify-between gap-24 xl:gap-32">
+      <div className="relative z-10 grid w-full max-w-[1440px] grid-cols-[minmax(0,26rem)_minmax(0,0.8fr)] items-center justify-between gap-24 xl:gap-32">
         <div>
           <p className="mono-label text-muted">
             {p.category} · {p.year} · {String(i + 1).padStart(2, "0")}/{String(total).padStart(2, "0")}
