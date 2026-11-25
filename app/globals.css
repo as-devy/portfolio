@@ -1484,6 +1484,10 @@ textarea.field {
   --paper: #0b101b;
   position: relative;
   background-color: var(--paper);
+  background-image:
+    linear-gradient(rgba(232, 237, 247, 0.027) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(232, 237, 247, 0.027) 1px, transparent 1px);
+  background-size: 56px 56px;
   color: var(--ink);
   isolation: isolate;
 }
