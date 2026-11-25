@@ -27,15 +27,18 @@ export function SectionHeading({
       )}
     >
       <Reveal variant="left" delayMs={0} durationMs={700}>
-        <p className={cn("eyebrow mb-4", align === "center" && "justify-center")}>
-          {eyebrow}
-        </p>
+        <div className={cn("flex items-center gap-5", align === "center" && "justify-center")}>
+          <p className="eyebrow">
+            {eyebrow}
+          </p>
+          <span aria-hidden className="hairline-x min-w-8 flex-1" />
+        </div>
       </Reveal>
 
       <RevealWords
         text={title}
         align={align}
-        className="display-title text-[clamp(2.1rem,5vw,3.6rem)] text-foreground"
+        className="display-title mt-5 text-[clamp(2.2rem,5.2vw,4rem)] text-foreground"
         delayMs={70}
         staggerMs={48}
       />

@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Syne } from "next/font/google";
-import { DevToolsGuard } from "@/components/layout/DevToolsGuard";
+import { Geist, Geist_Mono, Instrument_Serif, Syne } from "next/font/google";
 import { FloatingNav } from "@/components/layout/FloatingNav";
+import { ScrollProgress } from "@/components/layout/ScrollProgress";
 import { getVisibleNavigation } from "@/data/navigation";
 import { siteConfig } from "@/data/site";
 import { getSectionFlags } from "@/lib/section-flags";
@@ -21,6 +21,13 @@ const syne = Syne({
   variable: "--font-syne",
   subsets: ["latin"],
   weight: ["500", "600", "700", "800"],
+});
+
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument",
+  subsets: ["latin"],
+  weight: ["400"],
+  style: ["normal", "italic"],
 });
 
 export const metadata: Metadata = {
@@ -77,20 +84,16 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-const devToolsEnabled = !["false", "0", "no", "off"].includes(
-  (process.env.DEV_TOOLS ?? "true").trim().toLowerCase(),
-);
-
 export default function RootLayout({ children }: LayoutProps<"/">) {
   const navItems = getVisibleNavigation(getSectionFlags());
 
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${syne.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${syne.variable} ${instrumentSerif.variable} h-full antialiased`}
     >
       <body className="min-h-full font-sans text-foreground">
-        <DevToolsGuard enabled={devToolsEnabled} />
+        <ScrollProgress />
         <div className="site-bg" aria-hidden>
           <span className="site-orb site-orb-a" />
           <span className="site-orb site-orb-b" />

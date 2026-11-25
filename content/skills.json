@@ -385,8 +385,8 @@
   {
     "id": "mongo",
     "label": "MongoDB",
-    "category": "data",
-    "layer": "data",
+    "category": "backend",
+    "layer": "backend",
     "role": "Database",
     "icon": "mongo",
     "description": "Document database for flexible product data models.",
@@ -404,8 +404,8 @@
   {
     "id": "pg",
     "label": "PostgreSQL",
-    "category": "data",
-    "layer": "data",
+    "category": "backend",
+    "layer": "backend",
     "role": "Database",
     "icon": "postgres",
     "emphasis": "primary",
@@ -424,8 +424,8 @@
   {
     "id": "sql",
     "label": "SQL",
-    "category": "data",
-    "layer": "data",
+    "category": "backend",
+    "layer": "backend",
     "role": "Language",
     "icon": "sql",
     "description": "Query language for reading and shaping relational data precisely.",

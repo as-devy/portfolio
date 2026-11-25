@@ -1,339 +1,174 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
-import {
-  ArrowLeft,
-  ArrowRight,
-  ExternalLink,
-  FileText,
-  LockKeyhole,
-} from "lucide-react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { BrowserFrame } from "@/components/ui/BrowserFrame";
-import { ProjectCanvas } from "@/components/projects/ProjectCanvas";
+import Image from "next/image";
+import { useRef, useState } from "react";
+import { ArrowUpRight, FileText } from "lucide-react";
 import { GitHubIcon } from "@/components/ui/BrandIcons";
-import { Reveal } from "@/components/ui/Reveal";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { projects } from "@/data/projects";
+import { motion, useReducedMotion, useMotionValueEvent, useScroll, useTransform } from "motion/react";
+import { BrowserFrame } from "@/components/ui/BrowserFrame";
+import { projects as allProjects } from "@/data/projects";
+import type { Project } from "@/types";
 import { cn } from "@/lib/utils";
 
-const AUTO_SLIDE_MS = 12000;
+function Links({ p }: { p: Project }) {
+  const cls = "inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 font-mono text-xs tracking-wide text-foreground transition hover:border-white/60 hover:bg-white/10";
+  return (
+    <div className="flex flex-wrap gap-3">
+      {p.liveUrl ? (
+        <a className={cls} href={p.liveUrl} target="_blank" rel="noopener noreferrer">
+          Live site <ArrowUpRight className="h-3.5 w-3.5" />
+        </a>
+      ) : null}
+      {p.githubUrl ? (
+        <a className={cls} href={p.githubUrl} target="_blank" rel="noopener noreferrer">
+          <GitHubIcon className="h-3.5 w-3.5" /> Source
+        </a>
+      ) : null}
+      {p.briefUrl ? (
+        <a className={cls} href={p.briefUrl} target="_blank" rel="noopener noreferrer">
+          <FileText className="h-3.5 w-3.5" /> Project brief
+        </a>
+      ) : null}
+    </div>
+  );
+}
+
+function Shot({ p, sizes, mobile = false }: { p: Project; sizes: string; mobile?: boolean }) {
+  const src = mobile && p.imageMobile ? p.imageMobile : p.image;
+  return src ? (
+    <Image src={src} alt={`${p.name} screenshot`} fill sizes={sizes} className="object-cover object-top" />
+  ) : null;
+}
+
+function Panel({ p, i, total }: { p: Project; i: number; total: number }) {
+  return (
+    <div
+      className="relative flex h-full w-full shrink-0 items-center overflow-hidden px-14 pb-24 pt-24 [@media(max-height:780px)]:pb-20 [@media(max-height:780px)]:pt-20 xl:px-24"
+      style={{ background: `radial-gradient(60% 70% at 78% 45%, ${p.accent}2e, transparent 70%), #05070d` }}
+    >
+      <span aria-hidden className="serif outline-text pointer-events-none absolute -left-6 bottom-[-4rem] text-[32rem] leading-none">
+        {p.id}
+      </span>
+      {p.watermark ? (
+        <Image aria-hidden src={p.watermark} alt="" width={172} height={139} className="pointer-events-none absolute right-16 top-[9%] z-0 w-[120px] opacity-[0.15] xl:right-28 xl:w-[140px]" />
+      ) : null}
+      <div className="relative z-10 grid w-full max-w-[1440px] grid-cols-[minmax(0,27rem)_minmax(0,0.92fr)] items-center justify-between gap-24 xl:gap-32">
+        <div>
+          <p className="mono-label text-muted">
+            {p.category} · {p.year} · {String(i + 1).padStart(2, "0")}/{String(total).padStart(2, "0")}
+          </p>
+          <h3 className="serif mt-5 [@media(max-height:780px)]:mt-3 text-[clamp(2.8rem,min(6.4vw,8.5vh),6.2rem)] leading-[0.95]">{p.name}</h3>
+          <p className="serif mt-3 text-2xl [@media(max-height:780px)]:text-xl italic" style={{ color: p.accent }}>{p.tagline}</p>
+          <p className="mt-6 [@media(max-height:780px)]:mt-3 max-w-lg text-[0.95rem] [@media(max-height:780px)]:text-[0.85rem] leading-relaxed [@media(max-height:780px)]:leading-snug text-muted">{p.description}</p>
+          <p className="mono-label mt-5 [@media(max-height:780px)]:mt-3 text-subtle">{p.role}</p>
+          <ul className="mt-4 [@media(max-height:780px)]:mt-2 flex max-w-lg flex-wrap gap-2">
+            {p.technologies.slice(0, 7).map((t) => (
+              <li key={t} className="rounded-full border border-white/12 px-2.5 py-1 font-mono text-[0.65rem] text-muted">{t}</li>
+            ))}
+          </ul>
+          <div className="mt-7 [@media(max-height:780px)]:mt-4"><Links p={p} /></div>
+        </div>
+        <div className="relative" style={{ perspective: 1600 }}>
+          <div
+            aria-hidden
+            className="absolute -inset-6 rounded-3xl opacity-60 blur-3xl"
+            style={{ background: `${p.accent}33` }}
+          />
+          <div className="relative [transform:rotateY(-9deg)_rotateX(3deg)] shadow-[0_40px_90px_-30px_rgba(0,0,0,0.9)]">
+            <BrowserFrame url={p.liveUrl || p.githubUrl || p.name} accent={p.accent}>
+              <Shot p={p} sizes="55vw" />
+            </BrowserFrame>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export function Projects() {
-  const reduceMotion = useReducedMotion();
-  const projectsRef = useRef<HTMLElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [hasEnteredProjects, setHasEnteredProjects] = useState(false);
-  const [direction, setDirection] = useState(1);
-  const [isProjectHovered, setIsProjectHovered] = useState(false);
-
-  useEffect(() => {
-    const section = projectsRef.current;
-    if (!section || reduceMotion || hasEnteredProjects) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setHasEnteredProjects(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.2 },
-    );
-
-    observer.observe(section);
-    return () => observer.disconnect();
-  }, [hasEnteredProjects, reduceMotion]);
-
-  const goToIndex = useCallback(
-    (index: number) => {
-      const total = projects.length;
-      const next = ((index % total) + total) % total;
-      setDirection(next > activeIndex || (activeIndex === total - 1 && next === 0) ? 1 : -1);
-      if (activeIndex === 0 && next === total - 1) setDirection(-1);
-      setActiveIndex(next);
-    },
-    [activeIndex],
+  const projects = allProjects.filter((p) => !p.hidden);
+  const n = projects.length;
+  const ref = useRef<HTMLElement>(null);
+  const reduce = Boolean(useReducedMotion());
+  const [idx, setIdx] = useState(0);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", `${-((n - 1) / n) * 100}%`]);
+  useMotionValueEvent(scrollYProgress, "change", (v) =>
+    setIdx(Math.max(0, Math.min(n - 1, Math.round(v * (n - 1))))),
   );
-
-  const stepBy = useCallback(
-    (delta: -1 | 1) => {
-      setDirection(delta);
-      setActiveIndex((current) => {
-        const total = projects.length;
-        return (current + delta + total) % total;
-      });
-    },
-    [],
-  );
-
-  useEffect(() => {
-    if (
-      !hasEnteredProjects ||
-      reduceMotion ||
-      isProjectHovered ||
-      projects.length < 2
-    ) return;
-
-    const timer = window.setInterval(() => {
-      if (document.hidden) return;
-      setDirection(1);
-      setActiveIndex((current) => (current + 1) % projects.length);
-    }, AUTO_SLIDE_MS);
-
-    return () => window.clearInterval(timer);
-  }, [hasEnteredProjects, isProjectHovered, reduceMotion]);
-
-  const project = projects[activeIndex];
-
-  if (!project) return null;
 
   return (
-    <section ref={projectsRef} id="projects" className="relative overflow-hidden">
-      <div className="projects-shell">
-        <div className="mb-8 flex flex-col gap-6 md:mb-10 md:flex-row md:items-end md:justify-between">
-          <SectionHeading
-            className="mb-0"
-            eyebrow="03 — Selected work"
-            title="Web applications I've built."
-          />
-
-          <Reveal variant="right" delayMs={160}>
-            <div className="flex shrink-0 items-center gap-3">
-              <div className="hidden items-center gap-1.5 sm:flex" aria-hidden>
-                {projects.map((item, index) => (
-                  <button
-                    key={item.id}
-                    type="button"
-                    aria-label={`Go to ${item.name}`}
-                    onClick={() => goToIndex(index)}
-                    className={cn(
-                      "h-1.5 rounded-full transition-all duration-500",
-                      index === activeIndex
-                        ? "w-7 bg-accent"
-                        : "w-1.5 bg-white/20 hover:bg-white/35",
-                    )}
-                  />
-                ))}
-              </div>
-
-              <div className="flex gap-2">
-                <button
-                  type="button"
-                  onClick={() => stepBy(-1)}
-                  aria-label="Previous project"
-                  className="btn btn-secondary !min-h-11 !rounded-xl !px-3"
-                >
-                  <ArrowLeft className="h-4 w-4" />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => stepBy(1)}
-                  aria-label="Next project"
-                  className="btn btn-secondary !min-h-11 !rounded-xl !px-3"
-                >
-                  <ArrowRight className="h-4 w-4" />
-                </button>
-              </div>
+    <section id="projects" ref={ref} className="relative">
+      {/* Desktop: pinned horizontal film strip */}
+      {reduce ? (
+        <div className="hidden lg:block">
+          <p className="mono-label px-14 pt-24 text-muted xl:px-24">04 / Selected work</p>
+          {projects.map((p, i) => (
+            <div key={p.id} className="min-h-[100svh] border-t border-white/10">
+              <Panel p={p} i={i} total={n} />
             </div>
-          </Reveal>
+          ))}
         </div>
-
-        <Reveal variant="rise" delayMs={120} durationMs={900}>
-
-          <div
-            className="relative overflow-hidden"
-            onKeyDown={(event) => {
-              if (event.key === "ArrowRight") stepBy(1);
-              if (event.key === "ArrowLeft") stepBy(-1);
-            }}
-          >
-            <div
-              className="relative"
-              aria-label="Project case studies slider"
-              aria-roledescription="carousel"
-            >
-              <AnimatePresence mode="wait" custom={direction} initial={false}>
-                <motion.article
-                  key={project.id}
-                  custom={direction}
-                  variants={{
-                    enter: (dir: number) =>
-                      reduceMotion
-                        ? { opacity: 0 }
-                        : { opacity: 0, x: dir > 0 ? 48 : -48 },
-                    center: { opacity: 1, x: 0 },
-                    exit: (dir: number) =>
-                      reduceMotion
-                        ? { opacity: 0 }
-                        : { opacity: 0, x: dir > 0 ? -48 : 48 },
-                  }}
-                  initial="enter"
-                  animate="center"
-                  exit="exit"
-                  transition={{
-                    duration: reduceMotion ? 0.15 : 0.55,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
-                  className="group relative overflow-hidden rounded-[1.6rem] border border-border bg-[#080c16]/80"
-                  onMouseEnter={() => setIsProjectHovered(true)}
-                  onMouseLeave={() => setIsProjectHovered(false)}
-                >
-                  <div
-                    aria-hidden
-                    className="pointer-events-none absolute inset-0 opacity-70 transition-opacity duration-500 group-hover:opacity-100"
-                    style={{
-                      background: `radial-gradient(ellipse 60% 50% at 80% 0%, ${project.accent}22, transparent 55%)`,
-                    }}
-                  />
-
-                  {hasEnteredProjects && !reduceMotion ? (
-                    <span
-                      key={`${project.id}-${activeIndex}-progress`}
-                      className="project-auto-progress absolute inset-x-0 top-0 z-20 h-[2px] origin-left bg-gradient-to-r from-accent via-sky-400 to-violet-400"
-                      style={{
-                        animationDuration: `${AUTO_SLIDE_MS}ms`,
-                        animationPlayState: isProjectHovered ? "paused" : "running",
-                      }}
-                    />
-                  ) : null}
-
-                  <div className="relative z-10 grid gap-0 lg:grid-cols-[0.95fr_1.05fr]">
-                    <div className="flex flex-col justify-between p-6 md:p-8 lg:p-10">
-                      <div>
-                        <div className="flex items-center gap-3 font-mono text-[0.7rem] tracking-[0.16em] text-muted uppercase">
-                          <span style={{ color: project.accent }}>
-                            {project.id}
-                          </span>
-                          <span className="text-subtle">/</span>
-                          <span>{project.year}</span>
-                          <span className="text-subtle">/</span>
-                          <span>{project.category}</span>
-                        </div>
-
-                        <h3 className="display-title mt-5 text-[clamp(2rem,4vw,3.2rem)]">
-                          {project.name}
-                        </h3>
-                        <p className="mt-3 text-lg tracking-tight text-foreground/90">
-                          {project.tagline}
-                        </p>
-                        <p className="mt-4 max-w-md text-sm leading-relaxed text-muted">
-                          {project.description}
-                        </p>
-
-                        <p className="mt-6 font-mono text-[0.68rem] tracking-wide text-subtle uppercase">
-                          Role · {project.role}
-                        </p>
-
-                        <ul className="mt-4 flex flex-wrap gap-2">
-                          {project.technologies.map((tech) => (
-                            <li
-                              key={tech}
-                              className="rounded-full border border-border bg-white/[0.02] px-2.5 py-1 font-mono text-[0.65rem] text-muted"
-                            >
-                              {tech}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      <div className="mt-8 flex flex-wrap gap-3">
-                        {project.liveUrl ? (
-                          <a
-                            href={project.liveUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="btn btn-primary !min-h-10 !text-sm"
-                          >
-                            Live preview
-                            <ExternalLink className="h-3.5 w-3.5" />
-                          </a>
-                        ) : null}
-                        {project.briefUrl ? (
-                          <a
-                            href={project.briefUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="btn btn-secondary !min-h-10 !text-sm"
-                          >
-                            <FileText className="h-3.5 w-3.5" />
-                            Show MFA Impact Project Brief
-                          </a>
-                        ) : project.githubUrl ? (
-                          <a
-                            href={project.githubUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="btn btn-secondary !min-h-10 !text-sm"
-                          >
-                            <GitHubIcon className="h-3.5 w-3.5" />
-                            Source
-                          </a>
-                        ) : project.technologies.includes("WordPress") ? null : (
-                          <button
-                            type="button"
-                            disabled
-                            className="btn btn-secondary !min-h-10 !cursor-default !text-sm !opacity-50"
-                            aria-label={`${project.name} source repository is private`}
-                          >
-                            <GitHubIcon className="h-3.5 w-3.5" />
-                            <LockKeyhole className="h-3.5 w-3.5" />
-                            Private repo
-                          </button>
-                        )
-                        }
-                      </div>
-                    </div>
-
-                    <div
-                      className={cn(
-                        "relative",
-                        project.slug === "mfa-security-testing-lab"
-                          ? "min-h-[24rem] self-stretch overflow-hidden lg:min-h-0"
-                          : "p-4 pt-0 lg:p-8 lg:pl-0 lg:pt-8",
-                      )}
-                    >
-                      {project.slug === "mfa-security-testing-lab" ? (
-                        <ProjectCanvas project={project} />
-                      ) : (
-                        <div className="transition-transform duration-500 ease-out will-change-transform group-hover:-translate-y-1 group-hover:scale-[1.01]">
-                          <BrowserFrame
-                            url={project.liveUrl}
-                            accent={project.accent}
-                            contentAspectRatio={project.image ? 1920 / 1080 : undefined}
-                          >
-                            <ProjectCanvas project={project} />
-                          </BrowserFrame>
-                        </div>
-                      )}
-                      <p className="mt-3 text-right font-mono text-[0.65rem] text-subtle">
-                        Study {activeIndex + 1} of {projects.length}
-                      </p>
-                    </div>
-                  </div>
-                </motion.article>
-              </AnimatePresence>
-            </div>
-
-            <div className="mt-5 flex justify-center gap-1.5 sm:hidden">
-              {projects.map((item, index) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  aria-label={`Go to ${item.name}`}
-                  onClick={() => goToIndex(index)}
-                  className={cn(
-                    "h-1.5 rounded-full transition-all duration-500",
-                    index === activeIndex
-                      ? "w-7 bg-accent"
-                      : "w-1.5 bg-white/20",
-                  )}
-                />
-              ))}
-            </div>
+      ) : (
+      <div className="hidden lg:block" style={{ height: `${n * 100}vh` }}>
+        <div className="sticky top-0 h-[100svh] overflow-hidden">
+          <div className="absolute left-14 top-[4.75rem] z-20 flex items-center gap-4 xl:left-24">
+            <span className="mono-label text-muted">04 / Selected work</span>
           </div>
-        </Reveal>
-      </div >
-    </section >
+          <motion.div className="flex h-full" style={{ x, width: `${n * 100}%` }}>
+            {projects.map((p, i) => (
+              <div key={p.id} className="h-full" style={{ width: `${100 / n}%` }}>
+                <Panel p={p} i={i} total={n} />
+              </div>
+            ))}
+          </motion.div>
+          <div className="absolute inset-x-14 bottom-8 z-20 flex items-center gap-6 xl:inset-x-24" aria-hidden>
+            {projects.map((p, i) => (
+              <div key={p.id} className="flex-1">
+                <div className="h-px bg-white/15">
+                  <div className={cn("h-px bg-accent transition-all duration-500", i <= idx ? "w-full" : "w-0")} />
+                </div>
+                <p className={cn("mono-label mt-2 !text-[0.6rem] transition-colors", i === idx ? "text-foreground" : "text-subtle")}>{p.name}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      )}
+
+      {/* Mobile and tablet: poster stack */}
+      <div className="lg:hidden">
+        <p className="mono-label px-5 pb-6 pt-20 text-muted">04 / Selected work</p>
+        {projects.map((p) => (
+          <article key={p.id} className="relative border-t border-white/10 pb-12">
+            <div className="relative aspect-[4/5] w-full overflow-hidden sm:aspect-[16/10]">
+              <Shot p={p} sizes="100vw" mobile />
+              <div className="absolute inset-0" style={{ background: `linear-gradient(to top, #05070d 8%, ${p.accent}22 55%, transparent)` }} />
+              <span aria-hidden className="serif outline-text absolute right-4 top-2 text-[7rem] leading-none">{p.id}</span>
+
+              <div className="absolute inset-x-5 bottom-3">
+                <p className="mono-label text-muted">{p.category} · {p.year}</p>
+                <h3 className="serif mt-2 text-[3.1rem] leading-[0.95]">{p.name}</h3>
+              </div>
+            </div>
+            <div className="relative px-5">
+              {p.watermark ? (
+                <Image aria-hidden src={p.watermark} alt="" width={172} height={139} className="pointer-events-none absolute right-2 top-1 w-14 opacity-[0.10]" />
+              ) : null}
+              <p className="serif text-xl italic" style={{ color: p.accent }}>{p.tagline}</p>
+              <p className="mt-4 text-sm leading-relaxed text-muted">{p.description}</p>
+              <p className="mono-label mt-4 text-subtle">{p.role}</p>
+              <ul className="mt-3 flex flex-wrap gap-2">
+                {p.technologies.slice(0, 6).map((t) => (
+                  <li key={t} className="rounded-full border border-white/12 px-2.5 py-1 font-mono text-[0.62rem] text-muted">{t}</li>
+                ))}
+              </ul>
+              <div className="mt-5"><Links p={p} /></div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
   );
 }

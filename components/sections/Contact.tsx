@@ -26,6 +26,7 @@ export function Contact() {
     const name = String(data.get("name") ?? "");
     const email = String(data.get("email") ?? "");
     const message = String(data.get("message") ?? "");
+    const honey = String(data.get("_honey") ?? "");
 
     setStatus("sending");
 
@@ -42,6 +43,7 @@ export function Contact() {
             name,
             email,
             message,
+            _honey: honey,
             _subject: `Portfolio inquiry from ${name}`,
             _template: "table",
           }),
@@ -58,35 +60,36 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="relative">
+    <section id="contact" className="relative overflow-x-clip">
       <div className="section-shell">
-        <div className="overflow-hidden rounded-[1.75rem] border border-border bg-[radial-gradient(ellipse_80%_60%_at_10%_0%,rgba(34,211,238,0.12),transparent_50%),radial-gradient(ellipse_60%_50%_at_90%_100%,rgba(124,108,255,0.12),transparent_55%),rgba(8,12,20,0.75)]">
-          <div className="grid gap-10 p-6 md:p-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14 lg:p-14">
+        <div className="border-t border-border pt-10 md:pt-14">
+          <Reveal variant="left" durationMs={850}>
+            <div className="flex items-center gap-5">
+              <p className="eyebrow">05 — Contact</p>
+              <span aria-hidden className="hairline-x min-w-8 flex-1" />
+            </div>
+          </Reveal>
+
+          <Reveal variant="blur" delayMs={80} durationMs={900}>
+            <h2 className="display-title mt-6 max-w-4xl text-[clamp(2.4rem,6.5vw,4.6rem)]">
+              Have an idea{" "}
+              <span className="font-serif-accent italic text-transparent bg-gradient-to-r from-cyan-300 via-sky-400 to-violet-400 bg-clip-text">
+                worth building?
+              </span>
+            </h2>
+          </Reveal>
+
+          <div className="mt-10 grid gap-12 md:mt-14 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
             <div>
-              <Reveal variant="left" durationMs={850}>
-                <p className="eyebrow mb-5">05 — Contact</p>
-              </Reveal>
-              <Reveal variant="blur" delayMs={80} durationMs={900}>
-                <h2 className="display-title text-[clamp(2.4rem,6vw,4.4rem)]">
-                  Have an idea
-                  <span className="block text-transparent bg-gradient-to-r from-cyan-300 via-sky-400 to-violet-400 bg-clip-text">
-                    worth building?
-                  </span>
-                </h2>
-              </Reveal>
               <Reveal variant="up" delayMs={180} durationMs={800}>
-                <p className="lede mt-5">
+                <p className="lede">
                   Tell me what you&apos;re imagining. I&apos;m especially drawn
                   to thoughtful product work — clear interfaces, solid systems,
                   and problems that reward careful engineering.
                 </p>
               </Reveal>
 
-              <RevealStagger
-                className="mt-8 space-y-3"
-                delayMs={280}
-                staggerMs={80}
-              >
+              <RevealStagger className="mt-8" delayMs={280} staggerMs={80}>
                 {socialLinks.map((link) => {
                   const Icon = socialIcons[link.icon];
                   return (
@@ -99,7 +102,7 @@ export function Contact() {
                             ? undefined
                             : "noopener noreferrer"
                         }
-                        className="group flex items-center justify-between rounded-xl border border-border bg-white/[0.02] px-4 py-3 transition-colors hover:border-accent/30 hover:bg-accent/5"
+                        className="group flex items-center justify-between border-t border-border py-4 transition-colors last:border-b hover:bg-white/[0.02]"
                       >
                         <span className="flex items-center gap-3">
                           <Icon className="h-4 w-4 text-accent" />
@@ -111,15 +114,17 @@ export function Contact() {
                   );
                 })}
               </RevealStagger>
+
+              <Reveal variant="up" delayMs={380} durationMs={750}>
+                <p className="mt-6 font-mono text-[0.68rem] tracking-[0.14em] text-subtle uppercase">
+                  Direct · {siteConfig.email}
+                </p>
+              </Reveal>
             </div>
 
             <Reveal variant="right" delayMs={120} durationMs={850}>
-              <form
-                onSubmit={onSubmit}
-                className="glass rounded-2xl p-5 md:p-6"
-                noValidate
-              >
-                <label className="mb-4 block">
+              <form onSubmit={onSubmit} noValidate>
+                <label className="block border-t border-border py-4">
                   <span className="mb-2 block font-mono text-[0.68rem] tracking-[0.14em] text-muted uppercase">
                     Name
                   </span>
@@ -129,11 +134,11 @@ export function Contact() {
                     type="text"
                     autoComplete="name"
                     placeholder="Your name"
-                    className="field"
+                    className="field-line"
                   />
                 </label>
 
-                <label className="mb-4 block">
+                <label className="block border-t border-border py-4">
                   <span className="mb-2 block font-mono text-[0.68rem] tracking-[0.14em] text-muted uppercase">
                     Email
                   </span>
@@ -143,11 +148,11 @@ export function Contact() {
                     type="email"
                     autoComplete="email"
                     placeholder="you@domain.com"
-                    className="field"
+                    className="field-line"
                   />
                 </label>
 
-                <label className="mb-6 block">
+                <label className="block border-y border-border py-4">
                   <span className="mb-2 block font-mono text-[0.68rem] tracking-[0.14em] text-muted uppercase">
                     Message
                   </span>
@@ -155,14 +160,24 @@ export function Contact() {
                     required
                     name="message"
                     placeholder="What should we build?"
-                    className="field"
+                    className="field-line min-h-28 resize-y"
                   />
                 </label>
+
+                {/* Honeypot: invisible to people, traps bots (FormSubmit _honey) */}
+                <input
+                  type="text"
+                  name="_honey"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  className="hidden"
+                />
 
                 <button
                   type="submit"
                   disabled={status === "sending"}
-                  className="btn btn-primary w-full disabled:cursor-wait disabled:opacity-60"
+                  className="btn btn-primary mt-6 w-full disabled:cursor-wait disabled:opacity-60"
                 >
                   {status === "sending" ? "Sending..." : "Send message"}
                   <ArrowUpRight className="h-4 w-4" />
@@ -176,7 +191,7 @@ export function Contact() {
                     ? "Message sent successfully."
                     : status === "error"
                       ? "Message could not be sent. Please try again."
-                      : `Direct: ${siteConfig.email}`}
+                      : "Replies within a day."}
                 </p>
               </form>
             </Reveal>

@@ -6,11 +6,6 @@ export const skillCategories: Array<{
   blurb: string;
 }> = [
     {
-      id: "design",
-      label: "Design",
-      blurb: "Structure, clarity, and craft in the product surface.",
-    },
-    {
       id: "frontend",
       label: "Frontend",
       blurb: "Languages, libraries, and frameworks for building modern web interfaces.",
@@ -21,9 +16,9 @@ export const skillCategories: Array<{
       blurb: "APIs, server-side logic, and services that power the product.",
     },
     {
-      id: "data",
-      label: "Data",
-      blurb: "Persistence, queries, and application data flows.",
+      id: "design",
+      label: "Design",
+      blurb: "Structure, clarity, and craft in the product surface.",
     },
     {
       id: "security",
@@ -43,10 +38,9 @@ export const skillCategories: Array<{
   ];
 
 export const stackJourney: Array<{ id: SkillLayer; label: string }> = [
-  { id: "design", label: "Design" },
   { id: "frontend", label: "Frontend" },
   { id: "backend", label: "Backend" },
-  { id: "data", label: "Data" },
+  { id: "design", label: "Design" },
   { id: "security", label: "Security" },
   { id: "devops", label: "DevOps" },
   { id: "ai", label: "AI" },
@@ -310,8 +304,8 @@ export const skills: SkillNode[] = [
   {
     id: "mongo",
     label: "MongoDB",
-    category: "data",
-    layer: "data",
+    category: "backend",
+    layer: "backend",
     role: "Database",
     icon: "mongo",
     description: "Document database for flexible product data models.",
@@ -321,8 +315,8 @@ export const skills: SkillNode[] = [
   {
     id: "pg",
     label: "PostgreSQL",
-    category: "data",
-    layer: "data",
+    category: "backend",
+    layer: "backend",
     role: "Database",
     icon: "postgres",
     emphasis: "primary",
@@ -333,8 +327,8 @@ export const skills: SkillNode[] = [
   {
     id: "sql",
     label: "SQL",
-    category: "data",
-    layer: "data",
+    category: "backend",
+    layer: "backend",
     role: "Language",
     icon: "sql",
     description: "Query language for reading and shaping relational data precisely.",
@@ -499,19 +493,25 @@ export const identityAxes = [
     id: "fullstack",
     title: "Full-stack thinking",
     lead: "From interface to infrastructure.",
-    copy: "I connect frontend, APIs, data, and infrastructure into products that work as one system.",
+    copy: "I built a live travel platform end to end (Next.js, PostgreSQL, auth, maps) so the whole product works as one system, not stitched parts.",
   },
   {
     id: "product-ux",
     title: "Product & UI/UX",
     lead: "Technology should feel intuitive.",
-    copy: "I combine engineering with UI/UX thinking to create interfaces that are clear, responsive, and purposeful.",
+    copy: "I led design and development on real products — a travel booking platform and a pet-adoption app mentored with UWE Bristol — keeping interfaces clear and purposeful.",
   },
   {
     id: "security",
     title: "Security mindset",
     lead: "Build it. Then challenge it.",
-    copy: "I bring security thinking into development by exploring web vulnerabilities, authentication, and defensive practices.",
+    copy: "I built and mentored attack scenarios in a controlled MFA lab (brute force, MFA fatigue, session hijacking), detected and auto-blocked with Wazuh SIEM — work submitted to NCSC.",
+  },
+  {
+    id: "problem-solving",
+    title: "Problem solving",
+    lead: "Algorithms under pressure.",
+    copy: "I train competitive programming through ICPC, keeping the algorithmic core behind my engineering sharp.",
   },
 ] as const;
 

@@ -16,7 +16,6 @@ export type SkillCategory =
   | "design"
   | "frontend"
   | "backend"
-  | "data"
   | "security"
   | "devops"
   | "ai";
@@ -26,7 +25,6 @@ export type SkillLayer =
   | "design"
   | "frontend"
   | "backend"
-  | "data"
   | "security"
   | "devops"
   | "ai";
@@ -124,8 +122,14 @@ export interface Project {
   role: string;
   /** Optional screenshot shown inside the browser frame */
   image?: string;
+  /** Optional portrait variant for the mobile poster; falls back to image */
+  imageMobile?: string;
   /** Optional public project brief */
   briefUrl?: string;
+  /** Optional watermark image faded into the project panel/poster background */
+  watermark?: string;
+  /** Keep the record in data but exclude it from the rendered site */
+  hidden?: boolean;
 }
 
 export interface Certificate {
