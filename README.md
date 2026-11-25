@@ -29,7 +29,7 @@ The goal is to bring design, engineering, and security thinking together into on
 - React
 - TypeScript
 - Tailwind CSS
-- Framer Motion
+- Motion (formerly Framer Motion)
 
 ### UI / UX
 

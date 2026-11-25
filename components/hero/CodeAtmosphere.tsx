@@ -47,10 +47,11 @@ export function CodeAtmosphere() {
         }}
       />
 
-      {atmosphereSymbols.map((symbol) => (
+      {atmosphereSymbols.map((symbol, index) => (
         <span
           key={symbol.id}
           data-hero-symbol
+          data-zone={index % symbolZones.length}
           className="float-symbol text-xl md:text-3xl"
           style={{
             top: symbol.top,

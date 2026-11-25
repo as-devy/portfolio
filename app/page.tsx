@@ -5,6 +5,8 @@ import { Contact } from "@/components/sections/Contact";
 import { Education } from "@/components/sections/Education";
 import { Hero } from "@/components/sections/Hero";
 import { Projects } from "@/components/sections/Projects";
+import { Skills } from "@/components/sections/Skills";
+import { getVisibleSkills } from "@/lib/content-data";
 import { getVisibleCertificates } from "@/lib/content-data";
 import { getSectionFlags } from "@/lib/section-flags";
 import { projects } from "@/data/projects";
@@ -65,7 +67,9 @@ export default function Home() {
               {
                 "@type": "ItemList",
                 name: "Selected projects by Omar Elbedwehy",
-                itemListElement: projects.map((project, index) => ({
+                itemListElement: projects
+                  .filter((project) => !project.hidden)
+                  .map((project, index) => ({
                   "@type": "ListItem",
                   position: index + 1,
                   item: {
@@ -92,6 +96,7 @@ export default function Home() {
       <main className="relative flex-1">
         {sections.home ? <Hero /> : null}
         {sections.about ? <About /> : null}
+        {sections.about ? <Skills skills={getVisibleSkills()} /> : null}
         {sections.education ? <Education /> : null}
         {sections.projects ? <Projects /> : null}
         {sections.certificates && certificates.length > 0 ? (

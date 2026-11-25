@@ -1,213 +1,144 @@
 "use client";
 
 import Image from "next/image";
-import {
-  motion,
-  useReducedMotion,
-  useScroll,
-  useTransform,
-} from "motion/react";
-import { useRef, useState } from "react";
-import { ExternalLink, FileBadge2 } from "lucide-react";
-import { SectionHeading } from "@/components/ui/SectionHeading";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import { ExternalLink, Plus, X } from "lucide-react";
 import type { Certificate } from "@/types";
+import { cn } from "@/lib/utils";
 
-export function Certificates({
-  certificates,
-}: {
-  certificates: Certificate[];
-}) {
-  const reduceMotion = useReducedMotion();
-  const [activeIndex, setActiveIndex] = useState(0);
+export function Certificates({ certificates }: { certificates: Certificate[] }) {
+  const [open, setOpen] = useState<number | null>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const opener = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    if (open === null) return;
+    closeRef.current?.focus();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(null);
+    };
+    document.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+      opener.current?.focus();
+    };
+  }, [open]);
 
   if (certificates.length === 0) return null;
+  const c = open !== null ? certificates[open] : null;
 
   return (
-    <section id="certificates" className="relative">
-      <div className="section-shell">
-        <SectionHeading
-          eyebrow="04 — Credentials"
-          title="Certificates I've earned."
-        />
+    <section id="certificates" className="paper">
+      <div className="mx-auto w-[min(1240px,calc(100%-2rem))] py-24 md:w-[min(1240px,calc(100%-7rem))] md:py-36">
+        <p className="mono-label flex items-center gap-4 text-[color:var(--ink-soft)]">
+          <span>05 / Credentials</span>
+          <span aria-hidden className="h-px flex-1 bg-[color:var(--ink-faint)]" />
+        </p>
+        <h2 className="serif mt-8 max-w-4xl text-[clamp(2.6rem,7.4vw,6.4rem)] leading-[0.96]">
+          {certificates.length} certificates, <span className="mark italic">pinned up.</span>
+        </h2>
 
-        <div className="cert-journey">
-          <aside className="cert-rail" aria-label="Certificate progress">
-            <div className="cert-rail-line" aria-hidden />
-            <ol>
-              {certificates.map((certificate, index) => (
-                <li key={certificate.id}>
-                  <a
-                    href={`#certificate-${certificate.id}`}
-                    className={`cert-rail-link${activeIndex === index ? " is-active" : ""}`}
-                  >
-                    <span>{String(index + 1).padStart(2, "0")}</span>
-                    <span className="sr-only">{certificate.title}</span>
-                  </a>
-                </li>
-              ))}
-            </ol>
-          </aside>
-
-          <div className="cert-slides">
-            {certificates.map((certificate, index) => (
-              <CertificateSlide
-                key={certificate.id}
-                certificate={certificate}
-                index={index}
-                total={certificates.length}
-                reduceMotion={Boolean(reduceMotion)}
-                onActive={() => setActiveIndex(index)}
-              />
-            ))}
-          </div>
-        </div>
+        <ul className="mt-14 grid grid-cols-2 gap-4 md:mt-20 md:grid-cols-4 md:gap-7">
+          {certificates.map((cert, i) => (
+            <li key={cert.id} className={cn(i === 0 && "col-span-2 md:row-span-2")}>
+              <button
+                type="button"
+                onClick={(e) => {
+                  opener.current = e.currentTarget;
+                  setOpen(i);
+                }}
+                aria-haspopup="dialog"
+                className="cert-tile group flex h-full w-full flex-col overflow-hidden border border-[color:var(--ink-faint)] bg-[#101624] text-left text-[color:var(--ink)]"
+              >
+                <span className={cn("relative block w-full overflow-hidden border-b border-[color:var(--ink)] bg-white", i === 0 ? "aspect-[4/3] md:aspect-auto md:min-h-[18rem] md:flex-1" : "aspect-[4/3]")}>
+                  <Image
+                    src={cert.image}
+                    alt=""
+                    fill
+                    sizes={i === 0 ? "(min-width:768px) 50vw, 100vw" : "(min-width:768px) 25vw, 50vw"}
+                    className="object-contain p-2 transition duration-500 group-hover:scale-[1.04]"
+                  />
+                </span>
+                <span className={cn("flex flex-col justify-between gap-4 p-4 md:p-5", i === 0 ? "flex-none" : "flex-1")}>
+                  <span>
+                    <span className="mono-label block !text-[0.6rem] text-[color:var(--ink-soft)]">
+                      No. {String(i + 1).padStart(2, "0")} · {cert.date}
+                    </span>
+                    <span className={cn("serif mt-2 block leading-[1.05]", i === 0 ? "text-3xl md:text-5xl" : "text-xl md:text-2xl")}>
+                      {cert.title}
+                    </span>
+                  </span>
+                  <span className="mono-label flex items-center justify-between !text-[0.6rem] text-[color:var(--ink-soft)]">
+                    {cert.issuer}
+                    <Plus className="h-4 w-4 transition-transform duration-300 group-hover:rotate-90" />
+                  </span>
+                </span>
+              </button>
+            </li>
+          ))}
+        </ul>
       </div>
-    </section>
-  );
-}
 
-function CertificateSlide({
-  certificate,
-  index,
-  total,
-  reduceMotion,
-  onActive,
-}: {
-  certificate: Certificate;
-  index: number;
-  total: number;
-  reduceMotion: boolean;
-  onActive: () => void;
-}) {
-  const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-  const cardScale = useTransform(scrollYProgress, [0, 0.35, 0.65, 1], [0.92, 1, 1, 0.92]);
-  const cardY = useTransform(scrollYProgress, [0, 0.35, 0.65, 1], [42, 0, 0, -42]);
-  const cardOpacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.35, 1, 1, 0.35]);
-  const imageScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.12, 1, 1.12]);
-
-  return (
-    <motion.article
-      ref={ref}
-      id={`certificate-${certificate.id}`}
-      className="cert-slide scroll-mt-24"
-      style={
-        reduceMotion
-          ? undefined
-          : { scale: cardScale, y: cardY, opacity: cardOpacity }
-      }
-      onViewportEnter={onActive}
-      viewport={{ amount: 0.55 }}
-    >
-                <div className="cert-slide-heading">
-                  <span className="cert-index">
-                    {String(index + 1).padStart(2, "0")} /{" "}
-                    {String(total).padStart(2, "0")}
-                  </span>
-                  <span className="cert-status">
-                    <span aria-hidden className="cert-status-dot" />
-                    Verified learning
-                  </span>
-                </div>
-
-                <div className="cert-slide-grid">
-                  <div className="cert-slide-copy">
-                    <div className="cert-title-row">
-                      <span className="cert-icon" aria-hidden>
-                        <FileBadge2 className="h-5 w-5" strokeWidth={1.6} />
-                      </span>
-                      <div>
-                        <h3 className="font-display text-2xl tracking-tight md:text-3xl">
-                          {certificate.title}
-                        </h3>
-                        <p className="mt-1 font-mono text-[0.7rem] tracking-wide text-muted">
-                          {certificate.issuer} · {certificate.date}
-                        </p>
-                      </div>
-                    </div>
-
-                    <p className="mt-6 text-sm leading-relaxed text-muted md:text-[0.95rem]">
-                      {certificate.summary}
-                    </p>
-
-                    {certificate.effort ? (
-                      <p className="mt-4 font-mono text-[0.68rem] tracking-wide text-accent/90">
-                        {certificate.effort}
-                      </p>
-                    ) : null}
-
-                    {certificate.highlights?.length ? (
-                      <div className="mt-6">
-                        <p className="font-mono text-[0.68rem] tracking-[0.14em] text-subtle uppercase">
-                          What I practiced
-                        </p>
-                        <ul className="mt-3 grid gap-2 sm:grid-cols-2">
-                          {certificate.highlights.map((item) => (
-                            <li
-                              key={item}
-                              className="flex gap-2.5 text-sm leading-snug text-foreground/85"
-                            >
-                              <span
-                                aria-hidden
-                                className="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent/70"
-                              />
-                              <span>{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ) : null}
-
-                    <ul className="mt-6 flex flex-wrap gap-2" aria-label="Topics covered">
-                      {certificate.skills.map((skill) => (
-                        <li
-                          key={skill}
-                          className="rounded-full border border-border bg-white/[0.02] px-2.5 py-1 font-mono text-[0.65rem] text-muted"
-                        >
-                          {skill}
-                        </li>
-                      ))}
-                    </ul>
-
-                    {certificate.verificationUrl ? (
-                      <a
-                        href={certificate.verificationUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn btn-secondary mt-7 !min-h-10 !self-start !text-sm"
-                      >
-                        Verify credential
-                        <ExternalLink className="h-3.5 w-3.5" />
-                      </a>
-                    ) : null}
-                  </div>
-
+      {c ? createPortal(
+        <div
+          className="fixed inset-0 z-[100] flex items-end justify-center bg-[#05070d]/70 p-0 backdrop-blur-sm md:items-center md:p-8"
+          onClick={() => setOpen(null)}
+        >
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-label={c.title}
+            onClick={(e) => e.stopPropagation()}
+            className="paper relative max-h-[92svh] w-full max-w-5xl overflow-y-auto rounded-t-2xl border border-[color:var(--ink)] md:rounded-md"
+          >
+            <button
+              ref={closeRef}
+              type="button"
+              onClick={() => setOpen(null)}
+              aria-label="Close"
+              className="absolute right-3 top-3 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--ink)] bg-[color:var(--paper)]"
+            >
+              <X className="h-4 w-4" />
+            </button>
+            <div className="grid md:grid-cols-[1.1fr_1fr]">
+              <div className="relative aspect-[4/3] border-b border-[color:var(--ink)] bg-white md:aspect-auto md:min-h-[24rem] md:border-b-0 md:border-r">
+                <Image src={c.image} alt={`${c.title}, ${c.issuer}`} fill sizes="(min-width:768px) 55vw, 100vw" className="object-contain p-3" />
+              </div>
+              <div className="p-6 pb-12 md:p-9">
+                <p className="mono-label text-[color:var(--ink-soft)]">{c.issuer} · {c.date}</p>
+                <h3 className="serif mt-3 text-3xl leading-[1.05] md:text-4xl">{c.title}</h3>
+                <p className="mt-4 text-sm leading-relaxed text-[color:var(--ink-soft)]">{c.summary}</p>
+                {c.highlights?.length ? (
+                  <ul className="mt-5 space-y-1.5 text-sm">
+                    {c.highlights.map((h) => (
+                      <li key={h} className="flex gap-2"><span aria-hidden>→</span>{h}</li>
+                    ))}
+                  </ul>
+                ) : null}
+                <ul className="mt-5 flex flex-wrap gap-2">
+                  {c.skills.map((s) => (
+                    <li key={s} className="rounded-full border border-[color:var(--ink)] px-2.5 py-1 font-mono text-[0.62rem]">{s}</li>
+                  ))}
+                </ul>
+                {c.verificationUrl ? (
                   <a
-                    href={certificate.image}
+                    href={c.verificationUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="cert-preview group/preview"
-                    aria-label={`Open ${certificate.title} certificate image`}
+                    className="mt-6 inline-flex items-center gap-2 bg-[color:var(--ink)] px-5 py-3 font-mono text-xs tracking-wide text-[color:var(--paper)] transition hover:opacity-85"
                   >
-                    <motion.div
-                      className="h-full w-full"
-                      style={reduceMotion ? undefined : { scale: imageScale }}
-                    >
-                      <Image
-                        src={certificate.image}
-                        alt={`${certificate.title} — ${certificate.issuer}`}
-                        width={960}
-                        height={720}
-                        className="h-full w-full object-contain object-center transition duration-700 group-hover/preview:scale-[1.03]"
-                        sizes="(max-width: 768px) 100vw, 460px"
-                      />
-                    </motion.div>
-                    <span className="cert-preview-label">Open full certificate</span>
+                    Verify credential <ExternalLink className="h-3.5 w-3.5" />
                   </a>
-                </div>
-    </motion.article>
+                ) : null}
+              </div>
+            </div>
+          </div>
+        </div>,
+        document.body,
+      ) : null}
+    </section>
   );
 }

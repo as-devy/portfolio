@@ -31,7 +31,7 @@ export function RotatingPhrase({
   return (
     <span
       className={cn(
-        "relative inline-flex h-[1.15em] min-w-[12ch] items-center overflow-hidden align-bottom",
+        "relative inline-flex h-[1.28em] min-w-[12ch] items-center overflow-hidden align-bottom",
         className,
       )}
       aria-live="polite"

@@ -1,46 +1,23 @@
-import { Reveal } from "@/components/ui/Reveal";
 import { education } from "@/data/education";
 
 export function Education() {
   return (
-    <section id="education" className="relative">
-      <div className="section-shell !py-8 md:!py-12">
-        <Reveal variant="scale" durationMs={800}>
-          <div className="overflow-hidden rounded-2xl border border-border bg-white/[0.015]">
-            <div className="grid gap-6 p-6 md:grid-cols-[auto_1fr_auto] md:items-center md:gap-10 md:p-7">
-              <Reveal variant="left" delayMs={120}>
-                <div>
-                  <p className="eyebrow mb-3">02 — Education</p>
-                  <p className="font-mono text-[0.7rem] tracking-[0.16em] text-accent uppercase">
-                    Milestone
-                  </p>
-                </div>
-              </Reveal>
-
-              <Reveal variant="up" delayMs={200}>
-                <div className="md:border-l md:border-border md:pl-10">
-                  <h2 className="font-display text-2xl tracking-tight md:text-3xl">
-                    {education.stage}
-                  </h2>
-                  <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted">
-                    {education.detail}
-                  </p>
-                </div>
-              </Reveal>
-
-              <Reveal variant="right" delayMs={280}>
-                <div className="flex items-center gap-3 md:flex-col md:items-end md:text-right">
-                  <span className="rounded-full border border-emerald-400/25 bg-emerald-400/10 px-3 py-1 font-mono text-[0.7rem] text-emerald-300">
-                    {education.status}
-                  </span>
-                  <span className="font-mono text-xs text-subtle">
-                    {education.year}
-                  </span>
-                </div>
-              </Reveal>
-            </div>
-          </div>
-        </Reveal>
+    <section id="education" className="paper border-t border-[color:var(--ink-faint)]">
+      <div className="mx-auto flex w-[min(1240px,calc(100%-2rem))] flex-col gap-8 py-14 md:w-[min(1240px,calc(100%-7rem))] md:flex-row md:items-center md:justify-between md:py-20">
+        <div>
+          <p className="mono-label text-[color:var(--ink-soft)]">03 / Education</p>
+          <h2 className="serif mt-4 max-w-3xl text-[clamp(1.9rem,4vw,3.4rem)] leading-[1.05]">
+            {education.stage}
+          </h2>
+          <p className="mt-4 max-w-xl text-[color:var(--ink-soft)]">{education.detail}</p>
+        </div>
+        <div
+          className="mono-label shrink-0 -rotate-6 self-start rounded-md border-2 border-[color:var(--ink)] px-5 py-3 text-center text-[color:var(--ink)] md:self-center"
+          aria-label={`${education.status}, ${education.year}`}
+        >
+          {education.status}
+          <span className="mt-1 block text-[0.62rem] opacity-70">{education.year}</span>
+        </div>
       </div>
     </section>
   );

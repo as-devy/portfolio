@@ -1,10 +1,10 @@
 import type { EducationMilestone } from "@/types";
 
 export const education: EducationMilestone = {
-  id: "secondary",
-  stage: "Secondary education",
-  status: "Completed",
+  id: "eelu-computing",
+  stage: "Computing, Egyptian E-Learning University (EELU)",
+  status: "In progress",
   detail:
-    "Foundational academic stage completed. Currently focused on self-directed engineering, product design, and practical web security study.",
-  year: "Completed",
+    "First-year computing studies, combined with self-directed engineering, product design, and practical web security practice. Secondary education completed.",
+  year: "First year",
 };
