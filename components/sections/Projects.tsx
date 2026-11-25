@@ -43,7 +43,7 @@ function Shot({ p, sizes, mobile = false }: { p: Project; sizes: string; mobile?
 function Panel({ p, i, total }: { p: Project; i: number; total: number }) {
   return (
     <div
-      className="relative flex h-full w-full shrink-0 items-center overflow-hidden px-14 pt-24 xl:px-24"
+      className="relative flex h-full w-full shrink-0 items-center overflow-hidden px-14 pb-24 pt-24 [@media(max-height:780px)]:pb-20 [@media(max-height:780px)]:pt-20 xl:px-24"
       style={{ background: `radial-gradient(60% 70% at 78% 45%, ${p.accent}2e, transparent 70%), #05070d` }}
     >
       <span aria-hidden className="serif outline-text pointer-events-none absolute -left-6 bottom-[-4rem] text-[32rem] leading-none">
@@ -57,16 +57,16 @@ function Panel({ p, i, total }: { p: Project; i: number; total: number }) {
           <p className="mono-label text-muted">
             {p.category} · {p.year} · {String(i + 1).padStart(2, "0")}/{String(total).padStart(2, "0")}
           </p>
-          <h3 className="serif mt-5 text-[clamp(3.4rem,6.4vw,6.2rem)] leading-[0.95]">{p.name}</h3>
-          <p className="serif mt-3 text-2xl italic" style={{ color: p.accent }}>{p.tagline}</p>
-          <p className="mt-6 max-w-lg text-[0.95rem] leading-relaxed text-muted">{p.description}</p>
-          <p className="mono-label mt-5 text-subtle">{p.role}</p>
-          <ul className="mt-4 flex max-w-lg flex-wrap gap-2">
+          <h3 className="serif mt-5 [@media(max-height:780px)]:mt-3 text-[clamp(2.8rem,min(6.4vw,8.5vh),6.2rem)] leading-[0.95]">{p.name}</h3>
+          <p className="serif mt-3 text-2xl [@media(max-height:780px)]:text-xl italic" style={{ color: p.accent }}>{p.tagline}</p>
+          <p className="mt-6 [@media(max-height:780px)]:mt-3 max-w-lg text-[0.95rem] [@media(max-height:780px)]:text-[0.85rem] leading-relaxed [@media(max-height:780px)]:leading-snug text-muted">{p.description}</p>
+          <p className="mono-label mt-5 [@media(max-height:780px)]:mt-3 text-subtle">{p.role}</p>
+          <ul className="mt-4 [@media(max-height:780px)]:mt-2 flex max-w-lg flex-wrap gap-2">
             {p.technologies.slice(0, 7).map((t) => (
               <li key={t} className="rounded-full border border-white/12 px-2.5 py-1 font-mono text-[0.65rem] text-muted">{t}</li>
             ))}
           </ul>
-          <div className="mt-7"><Links p={p} /></div>
+          <div className="mt-7 [@media(max-height:780px)]:mt-4"><Links p={p} /></div>
         </div>
         <div className="relative" style={{ perspective: 1600 }}>
           <div
