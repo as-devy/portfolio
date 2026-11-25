@@ -80,9 +80,10 @@ export function FloatingNav({ items }: FloatingNavProps) {
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
           <a
             href="#home"
-            className="font-mono text-xs tracking-[0.22em] text-foreground uppercase"
+            aria-label={siteConfig.fullName}
+            className="outline-name text-[1.6rem] leading-none"
           >
-            {siteConfig.fullName.split(" ").join("·")}
+            {siteConfig.fullName.split(" ")[0]}
           </a>
           <ul className="flex items-center gap-6">
             {items.map((item, index) => {
@@ -119,6 +120,15 @@ export function FloatingNav({ items }: FloatingNavProps) {
           </ul>
         </div>
       </nav>
+
+      {/* Mobile: outlined name, top-left */}
+      <a
+        href="#home"
+        aria-label={siteConfig.fullName}
+        className="outline-name fixed left-5 top-4 z-50 text-[1.35rem] leading-none lg:hidden"
+      >
+        {siteConfig.fullName.split(" ")[0]}
+      </a>
 
       {/* Mobile: bottom icon pill */}
       <nav
