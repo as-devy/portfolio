@@ -2,6 +2,8 @@ import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 import { CodeAtmosphere } from "@/components/hero/CodeAtmosphere";
 import { Reveal } from "@/components/ui/Reveal";
 import { HeroPortrait } from "@/components/hero/HeroPortrait";
+import { HeroTitle } from "@/components/hero/HeroTitle";
+import { Marquee } from "@/components/ui/Marquee";
 import { RotatingPhrase } from "@/components/hero/RotatingPhrase";
 import { siteConfig } from "@/data/site";
 import {
@@ -23,6 +25,8 @@ export function Hero() {
     ? "contact"
     : getNextEnabledSection(primaryTarget ?? "home");
   const scrollTarget = getNextEnabledSection("home");
+  const [firstName, ...restName] = siteConfig.fullName.split(" ");
+  const lastName = restName.join(" ");
 
   return (
     <section
@@ -32,8 +36,8 @@ export function Hero() {
       <CodeAtmosphere />
 
       <div className="section-shell relative z-10 flex w-full flex-1 flex-col !py-0">
-        <div className="grid flex-1 items-center gap-7 py-6 lg:grid-cols-[1.1fr_0.9fr] lg:gap-8 lg:py-10 xl:gap-14">
-          <div className="max-w-2xl">
+        <div className="grid flex-1 items-center gap-7 py-6 lg:grid-cols-[1.15fr_0.85fr] lg:gap-8 lg:py-10 xl:gap-14">
+          <div className="min-w-0 max-w-2xl">
             <Reveal variant="down" durationMs={700}>
               <p className="eyebrow mb-6">
                 <span className="inline-flex h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_12px_var(--glow)]" />
@@ -41,25 +45,21 @@ export function Hero() {
               </p>
             </Reveal>
 
-            <Reveal variant="up" delayMs={90} durationMs={850}>
-              <h1 className="display-title mb-3 text-[clamp(3.2rem,10vw,6.4rem)] leading-none tracking-[-0.05em] text-foreground">
-                {siteConfig.name}
-              </h1>
-            </Reveal>
+            <HeroTitle first={firstName} last={lastName} />
 
-            <Reveal variant="up" delayMs={180} durationMs={800}>
-              <p className="max-w-xl text-[clamp(1.3rem,3vw,2rem)] font-medium leading-tight tracking-[-0.03em] text-foreground/92">
+            <Reveal variant="up" delayMs={440} durationMs={800}>
+              <p className="mt-4 max-w-xl font-serif-accent text-[clamp(1.4rem,3vw,2.1rem)] italic leading-snug tracking-[-0.01em] text-foreground/90">
                 Interfaces with <RotatingPhrase />
               </p>
             </Reveal>
 
-            <Reveal variant="blur" delayMs={260} durationMs={850}>
+            <Reveal variant="blur" delayMs={520} durationMs={850}>
               <p className="lede mt-5 max-w-lg lg:mt-6">
                 I design and build full-stack web products where UI/UX, system architecture, and engineering precision come together — with a strong focus on performance, scalability, and web security.
               </p>
             </Reveal>
 
-            <Reveal variant="up" delayMs={340} durationMs={750}>
+            <Reveal variant="up" delayMs={580} durationMs={750}>
               <ul className="mt-6 flex flex-wrap gap-2 lg:mt-7" aria-label="Focus areas">
                 {roles.map((role) => (
                   <li
@@ -72,7 +72,7 @@ export function Hero() {
               </ul>
             </Reveal>
 
-            <Reveal variant="up" delayMs={420} durationMs={750}>
+            <Reveal variant="up" delayMs={650} durationMs={750}>
               <div className="mt-7 flex flex-wrap gap-3 lg:mt-9">
                 {primaryTarget ? (
                   <a href={`#${primaryTarget}`} className="btn btn-primary">
@@ -99,8 +99,8 @@ export function Hero() {
         </div>
 
         {scrollTarget ? (
-          <Reveal variant="up" delayMs={560} durationMs={750}>
-            <div className="flex flex-col items-center justify-center gap-3 pb-8 pt-2 md:pb-10">
+          <Reveal variant="up" delayMs={720} durationMs={750}>
+            <div className="flex flex-col items-center justify-center gap-3 pb-6 pt-2">
               <a
                 href={`#${scrollTarget}`}
                 className="scroll-mouse"
@@ -115,6 +115,12 @@ export function Hero() {
           </Reveal>
         ) : null}
       </div>
+
+      <Marquee
+        items={["Full Stack", "UI/UX", "Web Security", "Problem Solving", "Engineered Intent"]}
+        className="relative z-10 border-y border-border/60 py-3"
+        speedSec={40}
+      />
     </section>
   );
 }

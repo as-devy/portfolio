@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Syne } from "next/font/google";
+import { Geist, Geist_Mono, Instrument_Serif, Syne } from "next/font/google";
 import { FloatingNav } from "@/components/layout/FloatingNav";
 import { ScrollProgress } from "@/components/layout/ScrollProgress";
 import { getVisibleNavigation } from "@/data/navigation";
@@ -21,6 +21,13 @@ const syne = Syne({
   variable: "--font-syne",
   subsets: ["latin"],
   weight: ["500", "600", "700", "800"],
+});
+
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument",
+  subsets: ["latin"],
+  weight: ["400"],
+  style: ["normal", "italic"],
 });
 
 export const metadata: Metadata = {
@@ -83,7 +90,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${syne.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${syne.variable} ${instrumentSerif.variable} h-full antialiased`}
     >
       <body className="min-h-full font-sans text-foreground">
         <ScrollProgress />
