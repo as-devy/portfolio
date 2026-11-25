@@ -1,3 +1,4 @@
+import { AboutProfile } from "@/components/about/AboutProfile";
 import { IdentityOverlay } from "@/components/about/IdentityOverlay";
 import { SkillTracks } from "@/components/about/SkillTracks";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -35,6 +36,8 @@ export function About() {
 
         <IdentityOverlay />
       </div>
+
+      <AboutProfile />
 
       {skills.length > 0 ? (
         <div className="relative z-10 mt-16 md:mt-24">
