@@ -38,6 +38,6 @@ export interface AboutStat {
 /** Headline numbers for the About stat strip. */
 export const aboutStats: AboutStat[] = [
   { id: "years", value: 3, suffix: "+", label: "Years building for the web" },
-  { id: "projects", value: 3, label: "Featured shipped projects" },
-  { id: "certificates", value: 5, label: "Professional certifications" },
+  { id: "projects", value: 3, label: "Featured projects" },
+  { id: "certificates", value: 5, label: "Certificates" },
 ];

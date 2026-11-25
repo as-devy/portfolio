@@ -69,8 +69,8 @@ export function AboutProfile() {
 
       <div className="mt-5 grid grid-cols-3 gap-4 md:gap-5">
         {aboutStats.map((stat, index) => (
-          <Reveal key={stat.id} variant="up" delayMs={160 + index * 110}>
-            <div className="rounded-[1.15rem] border border-white/10 bg-white/[0.02] px-4 py-6 text-center md:py-8">
+          <Reveal key={stat.id} variant="up" delayMs={160 + index * 110} className="h-full">
+            <div className="flex h-full flex-col justify-center rounded-[1.15rem] border border-white/10 bg-white/[0.02] px-4 py-6 text-center md:py-8">
               <p className="font-display text-3xl tracking-tight text-foreground md:text-5xl">
                 <CountUp value={stat.value} suffix={stat.suffix ?? ""} />
               </p>
