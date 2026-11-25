@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { ExternalLink, Plus, X } from "lucide-react";
 import type { Certificate } from "@/types";
 import { cn } from "@/lib/utils";
@@ -81,9 +82,9 @@ export function Certificates({ certificates }: { certificates: Certificate[] }) 
         </ul>
       </div>
 
-      {c ? (
+      {c ? createPortal(
         <div
-          className="fixed inset-0 z-[70] flex items-end justify-center bg-[#05070d]/70 p-0 backdrop-blur-sm md:items-center md:p-8"
+          className="fixed inset-0 z-[100] flex items-end justify-center bg-[#05070d]/70 p-0 backdrop-blur-sm md:items-center md:p-8"
           onClick={() => setOpen(null)}
         >
           <div
@@ -106,7 +107,7 @@ export function Certificates({ certificates }: { certificates: Certificate[] }) 
               <div className="relative aspect-[4/3] border-b border-[color:var(--ink)] bg-white md:aspect-auto md:min-h-[24rem] md:border-b-0 md:border-r">
                 <Image src={c.image} alt={`${c.title}, ${c.issuer}`} fill sizes="(min-width:768px) 55vw, 100vw" className="object-contain p-3" />
               </div>
-              <div className="p-6 md:p-9">
+              <div className="p-6 pb-12 md:p-9">
                 <p className="mono-label text-[color:var(--ink-soft)]">{c.issuer} · {c.date}</p>
                 <h3 className="serif mt-3 text-3xl leading-[1.05] md:text-4xl">{c.title}</h3>
                 <p className="mt-4 text-sm leading-relaxed text-[color:var(--ink-soft)]">{c.summary}</p>
@@ -135,7 +136,8 @@ export function Certificates({ certificates }: { certificates: Certificate[] }) 
               </div>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body,
       ) : null}
     </section>
   );

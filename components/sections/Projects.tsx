@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useRef, useState } from "react";
 import { ArrowUpRight, FileText } from "lucide-react";
 import { GitHubIcon } from "@/components/ui/BrandIcons";
-import { motion, useMotionValueEvent, useScroll, useTransform } from "motion/react";
+import { motion, useReducedMotion, useMotionValueEvent, useScroll, useTransform } from "motion/react";
 import { BrowserFrame } from "@/components/ui/BrowserFrame";
 import { projects as allProjects } from "@/data/projects";
 import type { Project } from "@/types";
@@ -85,6 +85,7 @@ export function Projects() {
   const projects = allProjects.filter((p) => !p.hidden);
   const n = projects.length;
   const ref = useRef<HTMLElement>(null);
+  const reduce = Boolean(useReducedMotion());
   const [idx, setIdx] = useState(0);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
   const x = useTransform(scrollYProgress, [0, 1], ["0%", `${-((n - 1) / n) * 100}%`]);
@@ -95,6 +96,16 @@ export function Projects() {
   return (
     <section id="projects" ref={ref} className="relative">
       {/* Desktop: pinned horizontal film strip */}
+      {reduce ? (
+        <div className="hidden lg:block">
+          <p className="mono-label px-14 pt-24 text-muted xl:px-24">04 / Selected work</p>
+          {projects.map((p, i) => (
+            <div key={p.id} className="min-h-[100svh] border-t border-white/10">
+              <Panel p={p} i={i} total={n} />
+            </div>
+          ))}
+        </div>
+      ) : (
       <div className="hidden lg:block" style={{ height: `${n * 100}vh` }}>
         <div className="sticky top-0 h-[100svh] overflow-hidden">
           <div className="absolute left-14 top-[4.75rem] z-20 flex items-center gap-4 xl:left-24">
@@ -119,6 +130,7 @@ export function Projects() {
           </div>
         </div>
       </div>
+      )}
 
       {/* Mobile and tablet: poster stack */}
       <div className="lg:hidden">

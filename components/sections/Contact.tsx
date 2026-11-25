@@ -60,7 +60,7 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="relative">
+    <section id="contact" className="relative overflow-x-clip">
       <div className="section-shell">
         <div className="border-t border-border pt-10 md:pt-14">
           <Reveal variant="left" durationMs={850}>

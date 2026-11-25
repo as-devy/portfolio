@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll } from "motion/react";
+import { motion, useMotionValueEvent, useReducedMotion, useScroll } from "motion/react";
 import { SkillIcon } from "@/components/about/SkillIcon";
 import { skillCategories, stackJourney } from "@/data/skills";
 import type { SkillNode } from "@/types";
@@ -35,6 +35,38 @@ export function Skills({ skills }: { skills: SkillNode[] }) {
 
   const layer = layers[idx];
 
+  if (reduce) {
+    return (
+      <section id="skills" className="dark-grid relative px-5 py-24 md:px-14">
+        <div className="mx-auto max-w-[1240px]">
+          <p className="mono-label text-muted">02 / Toolkit</p>
+          {layers.map((l, i) => (
+            <div key={l.id} className="mt-14 grid gap-6 lg:grid-cols-[1fr_1.15fr]">
+              <div>
+                <p className="serif text-[clamp(2.6rem,7vw,4.6rem)] italic leading-none">
+                  <span className="mono-label mr-3 align-middle not-italic text-accent">{String(i + 1).padStart(2, "0")}</span>
+                  {l.label}
+                </p>
+                <p className="mt-3 max-w-md text-sm text-muted">{l.blurb}</p>
+              </div>
+              <ul className="grid grid-cols-2 gap-px overflow-hidden rounded-sm border border-white/10 bg-white/10 sm:grid-cols-3">
+                {l.items.map((s) => (
+                  <li key={s.id} className="flex flex-col justify-between gap-5 bg-[#070b14] p-4">
+                    <SkillIcon name={s.icon} className="h-5 w-5 text-accent" />
+                    <div>
+                      <p className="text-sm font-medium text-foreground">{s.label}</p>
+                      <p className="mono-label !text-[0.58rem] text-subtle">{s.role}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section
       id="skills"
@@ -60,7 +92,7 @@ export function Skills({ skills }: { skills: SkillNode[] }) {
                   aria-current={idx === i ? "true" : undefined}
                   className={cn(
                     "serif flex w-full items-baseline gap-4 py-1 text-left text-[clamp(2.4rem,5.4vw,4.6rem)] leading-[1.02] transition-all duration-500",
-                    idx === i ? "translate-x-3 text-foreground italic" : "outline-text hover:text-foreground/60",
+                    idx === i ? "translate-x-3 text-foreground italic" : "text-foreground/40 hover:text-foreground/75",
                   )}
                 >
                   <span className="mono-label !text-[0.62rem] not-italic text-accent">{String(i + 1).padStart(2, "0")}</span>
@@ -80,15 +112,13 @@ export function Skills({ skills }: { skills: SkillNode[] }) {
           </div>
 
           <div className="relative min-h-[20rem] self-center">
-            <AnimatePresence mode="wait">
               <motion.div
                 key={layer.id}
                 initial={reduce ? false : { opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={reduce ? undefined : { opacity: 0, y: -16 }}
                 transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
               >
-                <p className="max-w-md text-sm leading-relaxed text-muted md:text-base">{layer.blurb}</p>
+                <p data-layer={layer.id} className="max-w-md text-sm leading-relaxed text-muted md:text-base">{layer.blurb}</p>
                 <ul className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-sm border border-white/10 bg-white/10 sm:grid-cols-3">
                   {layer.items.map((s) => (
                     <li key={s.id} className="group flex flex-col justify-between gap-5 bg-[#070b14] p-4 transition-colors hover:bg-[#0c1424] md:min-h-[6.5rem]">
@@ -101,7 +131,6 @@ export function Skills({ skills }: { skills: SkillNode[] }) {
                   ))}
                 </ul>
               </motion.div>
-            </AnimatePresence>
           </div>
         </div>
       </div>
