@@ -51,7 +51,7 @@ export function Certificates({ certificates }: { certificates: Certificate[] }) 
                   setOpen(i);
                 }}
                 aria-haspopup="dialog"
-                className="cert-tile group flex h-full w-full flex-col overflow-hidden border border-[color:var(--ink)] bg-[#f6f2e8] text-left text-[color:var(--ink)]"
+                className="cert-tile group flex h-full w-full flex-col overflow-hidden border border-[color:var(--ink-faint)] bg-[#101624] text-left text-[color:var(--ink)]"
               >
                 <span className={cn("relative block w-full overflow-hidden border-b border-[color:var(--ink)] bg-white", i === 0 ? "aspect-[4/3] md:aspect-auto md:min-h-[18rem] md:flex-1" : "aspect-[4/3]")}>
                   <Image
