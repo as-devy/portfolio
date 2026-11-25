@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
-import { IdentityCard } from "@/components/about/IdentityCard";
 import { identityAxes } from "@/data/skills";
 
 export function IdentityOverlay() {
@@ -59,22 +58,48 @@ export function IdentityOverlay() {
         </p>
       </motion.div>
 
-      <div className="mt-12 grid gap-4 md:mt-16 md:grid-cols-2 md:gap-5 xl:grid-cols-4">
+      <div className="mt-12 md:mt-16">
         {identityAxes.map((axis, index) => (
-          <IdentityCard key={axis.id} index={index} visible={shown}>
-            <span className="font-mono text-xs tracking-[0.14em] text-accent">
-              0{index + 1}
-            </span>
-            <h3 className="font-display mt-3 text-xl tracking-tight uppercase transition-colors duration-500 group-hover:text-white md:text-2xl">
-              {axis.title}
-            </h3>
-            <p className="mt-3 text-sm font-medium leading-snug text-foreground/90 md:text-[0.95rem]">
-              {axis.lead}
-            </p>
-            <p className="mt-2 text-sm leading-relaxed text-muted transition-colors duration-500 group-hover:text-foreground/70 md:text-[0.95rem]">
-              {axis.copy}
-            </p>
-          </IdentityCard>
+          <motion.div
+            key={axis.id}
+            initial={
+              reduceMotion
+                ? false
+                : { opacity: 0, y: 32, filter: "blur(6px)" }
+            }
+            animate={
+              shown
+                ? { opacity: 1, y: 0, filter: "blur(0px)" }
+                : undefined
+            }
+            transition={{
+              duration: 0.7,
+              delay: 0.2 + index * 0.1,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="group relative border-t border-border py-6 last:border-b md:py-8"
+          >
+            <span
+              aria-hidden
+              className="absolute left-0 top-0 h-px w-0 bg-accent transition-[width] duration-700 ease-out group-hover:w-full"
+            />
+            <div className="grid gap-2 md:grid-cols-[4.5rem_1fr_1.15fr] md:items-baseline md:gap-8">
+              <span className="font-mono text-xs tracking-[0.14em] text-accent">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <div>
+                <h3 className="font-display text-xl uppercase tracking-tight transition-colors duration-300 group-hover:text-white md:text-2xl">
+                  {axis.title}
+                </h3>
+                <p className="mt-1 font-serif-accent text-base italic text-foreground/80 md:text-lg">
+                  {axis.lead}
+                </p>
+              </div>
+              <p className="text-sm leading-relaxed text-muted md:text-[0.95rem]">
+                {axis.copy}
+              </p>
+            </div>
+          </motion.div>
         ))}
       </div>
     </div>
