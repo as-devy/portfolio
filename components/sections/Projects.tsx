@@ -33,6 +33,27 @@ function Links({ p }: { p: Project }) {
   );
 }
 
+function ProjectMark({ p, compact = false }: { p: Project; compact?: boolean }) {
+  const mark = p.mark;
+  if (!mark) return null;
+  return (
+    <div
+      aria-hidden
+      className={cn("pointer-events-none select-none rounded-md text-center", compact ? "px-3 py-1.5" : "px-5 py-3")}
+      style={{
+        border: `2px solid ${p.accent}d9`,
+        boxShadow: `inset 0 0 0 1px ${p.accent}59`,
+        color: p.accent,
+        background: `linear-gradient(rgba(5,7,13,0.88), rgba(5,7,13,0.88)), ${p.accent}14`,
+      }}
+    >
+      <p className={cn("font-mono uppercase opacity-80", compact ? "text-[0.42rem] tracking-[0.34em]" : "text-[0.5rem] tracking-[0.4em]")}>{mark.subTop}</p>
+      <p className={cn("font-display mt-1 font-bold leading-none", compact ? "text-[1.05rem] tracking-[0.18em]" : "text-[1.7rem] tracking-[0.22em]")}>{mark.label}</p>
+      <p className={cn("font-mono mt-1 uppercase opacity-80", compact ? "text-[0.42rem] tracking-[0.34em]" : "text-[0.5rem] tracking-[0.4em]")}>{mark.subBottom}</p>
+    </div>
+  );
+}
+
 function Shot({ p, sizes }: { p: Project; sizes: string }) {
   return p.image ? (
     <Image src={p.image} alt={`${p.name} screenshot`} fill sizes={sizes} className="object-cover object-top" />
@@ -48,7 +69,7 @@ function Panel({ p, i, total }: { p: Project; i: number; total: number }) {
       <span aria-hidden className="serif outline-text pointer-events-none absolute -left-6 bottom-[-4rem] text-[32rem] leading-none">
         {p.id}
       </span>
-      <div className="relative z-10 grid w-full max-w-[1320px] grid-cols-[0.92fr_1.08fr] items-center gap-14">
+      <div className="relative z-10 grid w-full max-w-[1320px] grid-cols-[0.92fr_1.08fr] items-center gap-20 xl:gap-28">
         <div>
           <p className="mono-label text-muted">
             {p.category} · {p.year} · {String(i + 1).padStart(2, "0")}/{String(total).padStart(2, "0")}
@@ -75,6 +96,11 @@ function Panel({ p, i, total }: { p: Project; i: number; total: number }) {
               <Shot p={p} sizes="55vw" />
             </BrowserFrame>
           </div>
+          {p.mark ? (
+            <div className="absolute -top-9 -right-4 z-20" style={{ transform: "rotate(7deg)" }}>
+              <ProjectMark p={p} />
+            </div>
+          ) : null}
         </div>
       </div>
     </div>
@@ -141,6 +167,11 @@ export function Projects() {
               <Shot p={p} sizes="100vw" />
               <div className="absolute inset-0" style={{ background: `linear-gradient(to top, #05070d 8%, ${p.accent}22 55%, transparent)` }} />
               <span aria-hidden className="serif outline-text absolute right-4 top-2 text-[7rem] leading-none">{p.id}</span>
+              {p.mark ? (
+                <div className="absolute left-4 top-4 z-10" style={{ transform: "rotate(-7deg)" }}>
+                  <ProjectMark p={p} compact />
+                </div>
+              ) : null}
               <div className="absolute inset-x-5 bottom-3">
                 <p className="mono-label text-muted">{p.category} · {p.year}</p>
                 <h3 className="serif mt-2 text-[3.1rem] leading-[0.95]">{p.name}</h3>
