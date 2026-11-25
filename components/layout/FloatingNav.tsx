@@ -39,24 +39,33 @@ export function FloatingNav({ items }: FloatingNavProps) {
 
     if (sections.length === 0) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      // The "reading line" sits 40% down the viewport; the active section
+      // is the last one whose top has passed it. Works for sections of any
+      // height, including ones much taller than the viewport.
+      const line = window.scrollY + window.innerHeight * 0.4;
+      let current = sections[0].id;
+      for (const section of sections) {
+        const top = section.getBoundingClientRect().top + window.scrollY;
+        if (top <= line) current = section.id;
+      }
+      setActive((prev) => (prev === current ? prev : current));
+    };
 
-        if (visible[0]?.target.id) {
-          setActive(visible[0].target.id);
-        }
-      },
-      {
-        rootMargin: "-35% 0px -45% 0px",
-        threshold: [0.1, 0.25, 0.5],
-      },
-    );
+    const onScroll = () => {
+      if (!frame) frame = window.requestAnimationFrame(update);
+    };
 
-    sections.forEach((section) => observer.observe(section));
-    return () => observer.disconnect();
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      if (frame) window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, [items]);
 
   if (items.length === 0) return null;
