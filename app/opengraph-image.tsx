@@ -98,13 +98,6 @@ export default async function Image() {
           <div style={{ display: "flex", fontSize: "26px", color: "#8b95a8", marginTop: "8px" }}>
             UI/UX Designer · Security
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: "10px", marginTop: "34px" }}>
-            <div style={{ width: "28px", height: "2px", background: "#22d3ee", display: "flex" }} />
-            <span style={{ fontSize: "20px", color: "#8b95a8", letterSpacing: "0.04em" }}>
-              omar-elbedwehy.vercel.app
-            </span>
-            <div style={{ width: "28px", height: "2px", background: "#22d3ee", display: "flex" }} />
-          </div>
         </div>
       </div>
     ),
