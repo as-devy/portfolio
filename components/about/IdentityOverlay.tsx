@@ -59,7 +59,7 @@ export function IdentityOverlay() {
         </p>
       </motion.div>
 
-      <div className="mt-12 grid gap-4 md:mt-16 md:grid-cols-3 md:gap-5">
+      <div className="mt-12 grid gap-4 md:mt-16 md:grid-cols-2 md:gap-5 xl:grid-cols-4">
         {identityAxes.map((axis, index) => (
           <IdentityCard key={axis.id} index={index} visible={shown}>
             <span className="font-mono text-xs tracking-[0.14em] text-accent">

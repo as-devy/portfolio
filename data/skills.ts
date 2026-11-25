@@ -513,6 +513,12 @@ export const identityAxes = [
     lead: "Build it. Then challenge it.",
     copy: "I built and mentored attack scenarios in a controlled MFA lab (brute force, MFA fatigue, session hijacking), detected and auto-blocked with Wazuh SIEM — work submitted to NCSC.",
   },
+  {
+    id: "problem-solving",
+    title: "Problem solving",
+    lead: "Algorithms under pressure.",
+    copy: "I train competitive programming through ICPC, keeping the algorithmic core behind my engineering sharp.",
+  },
 ] as const;
 
 export function getSkillById(id: string): SkillNode | undefined {

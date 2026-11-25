@@ -1,4 +1,3 @@
-import { AboutProfile } from "@/components/about/AboutProfile";
 import { IdentityOverlay } from "@/components/about/IdentityOverlay";
 import { SkillTracks } from "@/components/about/SkillTracks";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -31,13 +30,11 @@ export function About() {
         <SectionHeading
           eyebrow="01 — Identity"
           title="Not a bio. A working map."
-          description="A visual read of how I think across product, interface, and the systems underneath — including the security instincts I'm actively building."
+          description="A visual read of how I think across product, interface, and the systems underneath, plus the security and problem-solving instincts I keep training."
         />
 
         <IdentityOverlay />
       </div>
-
-      <AboutProfile />
 
       {skills.length > 0 ? (
         <div className="relative z-10 mt-16 md:mt-24">
