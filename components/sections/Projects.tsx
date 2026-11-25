@@ -50,7 +50,7 @@ function Panel({ p, i, total }: { p: Project; i: number; total: number }) {
         {p.id}
       </span>
       {p.watermark ? (
-        <Image aria-hidden src={p.watermark} alt="" width={674} height={151} className="pointer-events-none absolute right-14 top-[10%] z-0 w-[400px] opacity-[0.13] xl:right-24 xl:w-[460px]" />
+        <Image aria-hidden src={p.watermark} alt="" width={172} height={139} className="pointer-events-none absolute right-16 top-[9%] z-0 w-[120px] opacity-[0.15] xl:right-28 xl:w-[140px]" />
       ) : null}
       <div className="relative z-10 grid w-full max-w-[1440px] grid-cols-[0.95fr_1.05fr] items-center gap-24 xl:gap-40">
         <div>
@@ -154,7 +154,7 @@ export function Projects() {
             </div>
             <div className="relative px-5">
               {p.watermark ? (
-                <Image aria-hidden src={p.watermark} alt="" width={674} height={151} className="pointer-events-none absolute right-0 top-1 w-44 opacity-[0.08]" />
+                <Image aria-hidden src={p.watermark} alt="" width={172} height={139} className="pointer-events-none absolute right-2 top-1 w-14 opacity-[0.10]" />
               ) : null}
               <p className="serif text-xl italic" style={{ color: p.accent }}>{p.tagline}</p>
               <p className="mt-4 text-sm leading-relaxed text-muted">{p.description}</p>

@@ -79,7 +79,7 @@ export const projects: Project[] = [
     role: "Security Mentor, Technical Lead & Development",
     image: "/projects/mfa-lab.png",
     imageMobile: "/projects/mfa-lab-mobile.png",
-    watermark: "/projects/ncsc-logo.png",
+    watermark: "/projects/ncsc-crest.png",
     briefUrl:
       "/docs/MFA%20Impact%20Project%20Brief%20-%20Cyber%20Security%20Pathway.pdf",
   },
