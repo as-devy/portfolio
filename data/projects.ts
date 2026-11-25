@@ -95,5 +95,6 @@ export const projects: Project[] = [
     year: "2024",
     role: "Development",
     image: "/projects/sandra.png",
+    hidden: true,
   },
 ];

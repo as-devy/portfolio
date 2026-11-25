@@ -126,6 +126,8 @@ export interface Project {
   image?: string;
   /** Optional public project brief */
   briefUrl?: string;
+  /** Keep the record in data but exclude it from the rendered site */
+  hidden?: boolean;
 }
 
 export interface Certificate {

@@ -19,6 +19,8 @@ import { cn } from "@/lib/utils";
 
 const AUTO_SLIDE_MS = 12000;
 
+const visibleProjects = projects.filter((project) => !project.hidden);
+
 export function Projects() {
   const reduceMotion = useReducedMotion();
   const projectsRef = useRef<HTMLElement>(null);
@@ -47,7 +49,7 @@ export function Projects() {
 
   const goToIndex = useCallback(
     (index: number) => {
-      const total = projects.length;
+      const total = visibleProjects.length;
       const next = ((index % total) + total) % total;
       setDirection(next > activeIndex || (activeIndex === total - 1 && next === 0) ? 1 : -1);
       if (activeIndex === 0 && next === total - 1) setDirection(-1);
@@ -60,7 +62,7 @@ export function Projects() {
     (delta: -1 | 1) => {
       setDirection(delta);
       setActiveIndex((current) => {
-        const total = projects.length;
+        const total = visibleProjects.length;
         return (current + delta + total) % total;
       });
     },
@@ -72,19 +74,19 @@ export function Projects() {
       !hasEnteredProjects ||
       reduceMotion ||
       isProjectHovered ||
-      projects.length < 2
+      visibleProjects.length < 2
     ) return;
 
     const timer = window.setInterval(() => {
       if (document.hidden) return;
       setDirection(1);
-      setActiveIndex((current) => (current + 1) % projects.length);
+      setActiveIndex((current) => (current + 1) % visibleProjects.length);
     }, AUTO_SLIDE_MS);
 
     return () => window.clearInterval(timer);
   }, [hasEnteredProjects, isProjectHovered, reduceMotion]);
 
-  const project = projects[activeIndex];
+  const project = visibleProjects[activeIndex];
 
   if (!project) return null;
 
@@ -101,7 +103,7 @@ export function Projects() {
           <Reveal variant="right" delayMs={160}>
             <div className="flex shrink-0 items-center gap-3 lg:pr-16">
               <div className="hidden items-center gap-1.5 sm:flex" aria-hidden>
-                {projects.map((item, index) => (
+                {visibleProjects.map((item, index) => (
                   <button
                     key={item.id}
                     type="button"
@@ -307,7 +309,7 @@ export function Projects() {
                         </div>
                       )}
                       <p className="mt-3 text-right font-mono text-[0.65rem] text-subtle">
-                        Study {activeIndex + 1} of {projects.length}
+                        Study {activeIndex + 1} of {visibleProjects.length}
                       </p>
                     </div>
                   </div>
@@ -316,7 +318,7 @@ export function Projects() {
             </div>
 
             <div className="mt-5 flex justify-center gap-1.5 sm:hidden">
-              {projects.map((item, index) => (
+              {visibleProjects.map((item, index) => (
                 <button
                   key={item.id}
                   type="button"

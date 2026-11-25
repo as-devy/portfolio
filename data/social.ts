@@ -11,7 +11,7 @@ export const socialLinks: SocialLink[] = [
   {
     id: "linkedin",
     label: "LinkedIn",
-    href: "https://www.linkedin.com/in/omar-elbedwehy-981a65328/",
+    href: "https://www.linkedin.com/in/omar-elbedwehy/",
     icon: "linkedin",
   },
   {

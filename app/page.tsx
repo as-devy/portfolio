@@ -65,7 +65,9 @@ export default function Home() {
               {
                 "@type": "ItemList",
                 name: "Selected projects by Omar Elbedwehy",
-                itemListElement: projects.map((project, index) => ({
+                itemListElement: projects
+                  .filter((project) => !project.hidden)
+                  .map((project, index) => ({
                   "@type": "ListItem",
                   position: index + 1,
                   item: {

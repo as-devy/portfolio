@@ -1162,13 +1162,13 @@ body {
 
 .cert-slides {
   display: grid;
-  gap: 3rem;
+  gap: 2.25rem;
   scroll-snap-type: y proximity;
 }
 
 .cert-slide {
   position: relative;
-  min-height: min(42rem, 76vh);
+  min-height: min(33rem, 62vh);
   scroll-snap-align: start;
   display: flex;
   flex-direction: column;
@@ -1237,8 +1237,8 @@ body {
 
 .cert-slide-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(15rem, 0.95fr);
-  gap: 2rem;
+  grid-template-columns: minmax(0, 1.1fr) minmax(14rem, 0.8fr);
+  gap: 1.75rem;
   align-items: center;
 }
 
