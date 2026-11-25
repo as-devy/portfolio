@@ -16,7 +16,6 @@ export type SkillCategory =
   | "design"
   | "frontend"
   | "backend"
-  | "data"
   | "security"
   | "devops"
   | "ai";
@@ -26,7 +25,6 @@ export type SkillLayer =
   | "design"
   | "frontend"
   | "backend"
-  | "data"
   | "security"
   | "devops"
   | "ai";

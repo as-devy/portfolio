@@ -51,7 +51,7 @@ export function Certificates({ certificates }: { certificates: Certificate[] }) 
                   setOpen(i);
                 }}
                 aria-haspopup="dialog"
-                className="cert-tile group flex h-full w-full flex-col overflow-hidden border border-[color:var(--ink)] bg-[#f6f2e8] text-left"
+                className="cert-tile group flex h-full w-full flex-col overflow-hidden border border-[color:var(--ink)] bg-[#f6f2e8] text-left text-[color:var(--ink)]"
               >
                 <span className={cn("relative block w-full overflow-hidden border-b border-[color:var(--ink)] bg-white", i === 0 ? "aspect-[4/3] md:aspect-auto md:min-h-[18rem] md:flex-1" : "aspect-[4/3]")}>
                   <Image
@@ -99,7 +99,7 @@ export function Certificates({ certificates }: { certificates: Certificate[] }) 
               type="button"
               onClick={() => setOpen(null)}
               aria-label="Close"
-              className="absolute right-3 top-3 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--ink)] bg-[#f6f2e8]"
+              className="absolute right-3 top-3 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--ink)] bg-[color:var(--paper)]"
             >
               <X className="h-4 w-4" />
             </button>
@@ -128,7 +128,7 @@ export function Certificates({ certificates }: { certificates: Certificate[] }) 
                     href={c.verificationUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-6 inline-flex items-center gap-2 bg-[color:var(--ink)] px-5 py-3 font-mono text-xs tracking-wide text-[#f6f2e8] transition hover:bg-black"
+                    className="mt-6 inline-flex items-center gap-2 bg-[color:var(--ink)] px-5 py-3 font-mono text-xs tracking-wide text-[color:var(--paper)] transition hover:opacity-85"
                   >
                     Verify credential <ExternalLink className="h-3.5 w-3.5" />
                   </a>

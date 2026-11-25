@@ -6,11 +6,6 @@ export const skillCategories: Array<{
   blurb: string;
 }> = [
     {
-      id: "design",
-      label: "Design",
-      blurb: "Structure, clarity, and craft in the product surface.",
-    },
-    {
       id: "frontend",
       label: "Frontend",
       blurb: "Languages, libraries, and frameworks for building modern web interfaces.",
@@ -21,9 +16,9 @@ export const skillCategories: Array<{
       blurb: "APIs, server-side logic, and services that power the product.",
     },
     {
-      id: "data",
-      label: "Data",
-      blurb: "Persistence, queries, and application data flows.",
+      id: "design",
+      label: "Design",
+      blurb: "Structure, clarity, and craft in the product surface.",
     },
     {
       id: "security",
@@ -43,10 +38,9 @@ export const skillCategories: Array<{
   ];
 
 export const stackJourney: Array<{ id: SkillLayer; label: string }> = [
-  { id: "design", label: "Design" },
   { id: "frontend", label: "Frontend" },
   { id: "backend", label: "Backend" },
-  { id: "data", label: "Data" },
+  { id: "design", label: "Design" },
   { id: "security", label: "Security" },
   { id: "devops", label: "DevOps" },
   { id: "ai", label: "AI" },
@@ -310,8 +304,8 @@ export const skills: SkillNode[] = [
   {
     id: "mongo",
     label: "MongoDB",
-    category: "data",
-    layer: "data",
+    category: "backend",
+    layer: "backend",
     role: "Database",
     icon: "mongo",
     description: "Document database for flexible product data models.",
@@ -321,8 +315,8 @@ export const skills: SkillNode[] = [
   {
     id: "pg",
     label: "PostgreSQL",
-    category: "data",
-    layer: "data",
+    category: "backend",
+    layer: "backend",
     role: "Database",
     icon: "postgres",
     emphasis: "primary",
@@ -333,8 +327,8 @@ export const skills: SkillNode[] = [
   {
     id: "sql",
     label: "SQL",
-    category: "data",
-    layer: "data",
+    category: "backend",
+    layer: "backend",
     role: "Language",
     icon: "sql",
     description: "Query language for reading and shaping relational data precisely.",

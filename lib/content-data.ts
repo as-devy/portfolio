@@ -22,7 +22,6 @@ const SKILL_CATEGORIES: SkillCategory[] = [
   "design",
   "frontend",
   "backend",
-  "data",
   "security",
   "devops",
   "ai",
