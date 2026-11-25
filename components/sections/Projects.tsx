@@ -50,9 +50,9 @@ function Panel({ p, i, total }: { p: Project; i: number; total: number }) {
         {p.id}
       </span>
       {p.watermark ? (
-        <Image aria-hidden src={p.watermark} alt="" width={674} height={151} className="pointer-events-none absolute left-8 top-[32%] w-[540px] opacity-[0.07]" />
+        <Image aria-hidden src={p.watermark} alt="" width={674} height={151} className="pointer-events-none absolute right-14 top-[10%] z-0 w-[400px] opacity-[0.13] xl:right-24 xl:w-[460px]" />
       ) : null}
-      <div className="relative z-10 grid w-full max-w-[1320px] grid-cols-[0.92fr_1.08fr] items-center gap-20 xl:gap-28">
+      <div className="relative z-10 grid w-full max-w-[1440px] grid-cols-[0.95fr_1.05fr] items-center gap-24 xl:gap-40">
         <div>
           <p className="mono-label text-muted">
             {p.category} · {p.year} · {String(i + 1).padStart(2, "0")}/{String(total).padStart(2, "0")}
