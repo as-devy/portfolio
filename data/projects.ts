@@ -78,11 +78,8 @@ export const projects: Project[] = [
     year: "2026",
     role: "Security Mentor, Technical Lead & Development",
     image: "/projects/mfa-lab.png",
-    mark: {
-      label: "NCSC",
-      subTop: "Submitted to",
-      subBottom: "CSE Connect Exceler8or 2025",
-    },
+    imageMobile: "/projects/mfa-lab-mobile.png",
+    watermark: "/projects/ncsc-logo.png",
     briefUrl:
       "/docs/MFA%20Impact%20Project%20Brief%20-%20Cyber%20Security%20Pathway.pdf",
   },

@@ -122,17 +122,12 @@ export interface Project {
   role: string;
   /** Optional screenshot shown inside the browser frame */
   image?: string;
+  /** Optional portrait variant for the mobile poster; falls back to image */
+  imageMobile?: string;
   /** Optional public project brief */
   briefUrl?: string;
-  /** Optional special identity mark rendered as a rubber stamp (e.g. official submission) */
-  mark?: {
-    /** Large stamped wordmark, e.g. "NCSC" */
-    label: string;
-    /** Micro line above the wordmark */
-    subTop: string;
-    /** Micro line below the wordmark */
-    subBottom: string;
-  };
+  /** Optional watermark image faded into the project panel/poster background */
+  watermark?: string;
   /** Keep the record in data but exclude it from the rendered site */
   hidden?: boolean;
 }
