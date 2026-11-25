@@ -110,6 +110,7 @@
       "TryHackMe",
       "Hands-on labs"
     ],
-    "image": "/certificates/THM-Advent-Of-Cyber-2025.jpg"
+    "image": "/certificates/THM-Advent-Of-Cyber-2025.jpg",
+    "verificationUrl": "https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-A6KW57K6QL.pdf"
   }
 ]
