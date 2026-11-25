@@ -5,7 +5,8 @@ import { Contact } from "@/components/sections/Contact";
 import { Education } from "@/components/sections/Education";
 import { Hero } from "@/components/sections/Hero";
 import { Projects } from "@/components/sections/Projects";
-import { Marquee } from "@/components/ui/Marquee";
+import { Skills } from "@/components/sections/Skills";
+import { getVisibleSkills } from "@/lib/content-data";
 import { getVisibleCertificates } from "@/lib/content-data";
 import { getSectionFlags } from "@/lib/section-flags";
 import { projects } from "@/data/projects";
@@ -95,17 +96,9 @@ export default function Home() {
       <main className="relative flex-1">
         {sections.home ? <Hero /> : null}
         {sections.about ? <About /> : null}
+        {sections.about ? <Skills skills={getVisibleSkills()} /> : null}
         {sections.education ? <Education /> : null}
-        {sections.projects ? (
-          <>
-            <Marquee
-              items={["Selected Work", "Case Studies", "Travel With Friends", "Paws Safe", "MFA Security Lab"]}
-              className="border-y border-border/60 py-3"
-              speedSec={44}
-            />
-            <Projects />
-          </>
-        ) : null}
+        {sections.projects ? <Projects /> : null}
         {sections.certificates && certificates.length > 0 ? (
           <Certificates certificates={certificates} />
         ) : null}

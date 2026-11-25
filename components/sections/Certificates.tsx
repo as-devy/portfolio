@@ -1,132 +1,142 @@
-import Image from "next/image";
-import { ExternalLink, FileBadge2 } from "lucide-react";
-import { Reveal } from "@/components/ui/Reveal";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import type { Certificate } from "@/types";
+"use client";
 
-export function Certificates({
-  certificates,
-}: {
-  certificates: Certificate[];
-}) {
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+import { ExternalLink, Plus, X } from "lucide-react";
+import type { Certificate } from "@/types";
+import { cn } from "@/lib/utils";
+
+export function Certificates({ certificates }: { certificates: Certificate[] }) {
+  const [open, setOpen] = useState<number | null>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const opener = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    if (open === null) return;
+    closeRef.current?.focus();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(null);
+    };
+    document.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+      opener.current?.focus();
+    };
+  }, [open]);
+
   if (certificates.length === 0) return null;
+  const c = open !== null ? certificates[open] : null;
 
   return (
-    <section id="certificates" className="relative">
-      <div className="section-shell">
-        <SectionHeading
-          eyebrow="04 — Credentials"
-          title="Certificates I've earned."
-        />
+    <section id="certificates" className="paper">
+      <div className="mx-auto w-[min(1240px,calc(100%-2rem))] py-24 md:w-[min(1240px,calc(100%-7rem))] md:py-36">
+        <p className="mono-label flex items-center gap-4 text-[color:var(--ink-soft)]">
+          <span>05 / Credentials</span>
+          <span aria-hidden className="h-px flex-1 bg-[color:var(--ink-faint)]" />
+        </p>
+        <h2 className="serif mt-8 max-w-4xl text-[clamp(2.6rem,7.4vw,6.4rem)] leading-[0.96]">
+          {certificates.length} certificates, <span className="mark italic">pinned up.</span>
+        </h2>
 
-        <div>
-          {certificates.map((certificate, index) => (
-            <Reveal
-              key={certificate.id}
-              variant="up"
-              delayMs={Math.min(index, 3) * 70}
-              amount={0.15}
-            >
-              <article
-                id={`certificate-${certificate.id}`}
-                className="group scroll-mt-28 border-t border-border py-7 last:border-b md:py-9"
+        <ul className="mt-14 grid grid-cols-2 gap-4 md:mt-20 md:grid-cols-4 md:gap-7">
+          {certificates.map((cert, i) => (
+            <li key={cert.id} className={cn(i === 0 && "col-span-2 md:row-span-2")}>
+              <button
+                type="button"
+                onClick={(e) => {
+                  opener.current = e.currentTarget;
+                  setOpen(i);
+                }}
+                aria-haspopup="dialog"
+                className="cert-tile group flex h-full w-full flex-col overflow-hidden border border-[color:var(--ink)] bg-[#f6f2e8] text-left"
               >
-                <div className="grid gap-5 md:grid-cols-[3.5rem_1fr_auto] md:items-start md:gap-8">
-                  <span className="font-mono text-xs tracking-[0.14em] text-accent md:pt-2">
-                    {String(index + 1).padStart(2, "0")}
+                <span className={cn("relative block w-full overflow-hidden border-b border-[color:var(--ink)] bg-white", i === 0 ? "aspect-[4/3] md:aspect-auto md:min-h-[18rem] md:flex-1" : "aspect-[4/3]")}>
+                  <Image
+                    src={cert.image}
+                    alt=""
+                    fill
+                    sizes={i === 0 ? "(min-width:768px) 50vw, 100vw" : "(min-width:768px) 25vw, 50vw"}
+                    className="object-contain p-2 transition duration-500 group-hover:scale-[1.04]"
+                  />
+                </span>
+                <span className={cn("flex flex-col justify-between gap-4 p-4 md:p-5", i === 0 ? "flex-none" : "flex-1")}>
+                  <span>
+                    <span className="mono-label block !text-[0.6rem] text-[color:var(--ink-soft)]">
+                      No. {String(i + 1).padStart(2, "0")} · {cert.date}
+                    </span>
+                    <span className={cn("serif mt-2 block leading-[1.05]", i === 0 ? "text-3xl md:text-5xl" : "text-xl md:text-2xl")}>
+                      {cert.title}
+                    </span>
                   </span>
+                  <span className="mono-label flex items-center justify-between !text-[0.6rem] text-[color:var(--ink-soft)]">
+                    {cert.issuer}
+                    <Plus className="h-4 w-4 transition-transform duration-300 group-hover:rotate-90" />
+                  </span>
+                </span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
 
-                  <div>
-                    <div className="flex items-start gap-3">
-                      <span
-                        aria-hidden
-                        className="mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-border bg-white/[0.02] text-accent"
-                      >
-                        <FileBadge2 className="h-4 w-4" strokeWidth={1.6} />
-                      </span>
-                      <div>
-                        <h3 className="font-display text-xl tracking-tight transition-colors duration-300 group-hover:text-white md:text-2xl">
-                          {certificate.title}
-                        </h3>
-                        <p className="mt-1 font-mono text-[0.7rem] tracking-wide text-muted">
-                          {certificate.issuer} · {certificate.date}
-                          {certificate.verificationUrl ? (
-                            <span className="text-accent/90">
-                              {" "}
-                              · Verified
-                            </span>
-                          ) : null}
-                        </p>
-                      </div>
-                    </div>
-
-                    <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted md:text-[0.95rem]">
-                      {certificate.summary}
-                    </p>
-
-                    {certificate.highlights?.length ? (
-                      <ul className="mt-4 grid max-w-2xl gap-x-6 gap-y-1.5 sm:grid-cols-2">
-                        {certificate.highlights.map((item) => (
-                          <li
-                            key={item}
-                            className="flex items-baseline gap-2 text-[0.83rem] leading-snug text-muted"
-                          >
-                            <span
-                              aria-hidden
-                              className="h-1 w-1 shrink-0 translate-y-[-2px] rounded-full bg-accent/80"
-                            />
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                    ) : null}
-
-                    <div className="mt-5 flex flex-wrap items-center gap-2">
-                      {certificate.skills.map((skill) => (
-                        <span
-                          key={skill}
-                          className="rounded-full border border-border bg-white/[0.02] px-2.5 py-1 font-mono text-[0.65rem] text-muted"
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-
-                    {certificate.verificationUrl ? (
-                      <a
-                        href={certificate.verificationUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn btn-secondary mt-5 !min-h-10 !text-sm"
-                      >
-                        Verify credential
-                        <ExternalLink className="h-3.5 w-3.5" />
-                      </a>
-                    ) : null}
-                  </div>
-
+      {c ? (
+        <div
+          className="fixed inset-0 z-[70] flex items-end justify-center bg-[#05070d]/70 p-0 backdrop-blur-sm md:items-center md:p-8"
+          onClick={() => setOpen(null)}
+        >
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-label={c.title}
+            onClick={(e) => e.stopPropagation()}
+            className="paper relative max-h-[92svh] w-full max-w-5xl overflow-y-auto rounded-t-2xl border border-[color:var(--ink)] md:rounded-md"
+          >
+            <button
+              ref={closeRef}
+              type="button"
+              onClick={() => setOpen(null)}
+              aria-label="Close"
+              className="absolute right-3 top-3 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--ink)] bg-[#f6f2e8]"
+            >
+              <X className="h-4 w-4" />
+            </button>
+            <div className="grid md:grid-cols-[1.1fr_1fr]">
+              <div className="relative aspect-[4/3] border-b border-[color:var(--ink)] bg-white md:aspect-auto md:min-h-[24rem] md:border-b-0 md:border-r">
+                <Image src={c.image} alt={`${c.title}, ${c.issuer}`} fill sizes="(min-width:768px) 55vw, 100vw" className="object-contain p-3" />
+              </div>
+              <div className="p-6 md:p-9">
+                <p className="mono-label text-[color:var(--ink-soft)]">{c.issuer} · {c.date}</p>
+                <h3 className="serif mt-3 text-3xl leading-[1.05] md:text-4xl">{c.title}</h3>
+                <p className="mt-4 text-sm leading-relaxed text-[color:var(--ink-soft)]">{c.summary}</p>
+                {c.highlights?.length ? (
+                  <ul className="mt-5 space-y-1.5 text-sm">
+                    {c.highlights.map((h) => (
+                      <li key={h} className="flex gap-2"><span aria-hidden>→</span>{h}</li>
+                    ))}
+                  </ul>
+                ) : null}
+                <ul className="mt-5 flex flex-wrap gap-2">
+                  {c.skills.map((s) => (
+                    <li key={s} className="rounded-full border border-[color:var(--ink)] px-2.5 py-1 font-mono text-[0.62rem]">{s}</li>
+                  ))}
+                </ul>
+                {c.verificationUrl ? (
                   <a
-                    href={certificate.image}
+                    href={c.verificationUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label={`Open ${certificate.title} certificate image`}
-                    className="block overflow-hidden rounded-xl border border-border bg-white/[0.02] transition-colors duration-300 hover:border-accent/40 md:w-52"
+                    className="mt-6 inline-flex items-center gap-2 bg-[color:var(--ink)] px-5 py-3 font-mono text-xs tracking-wide text-[#f6f2e8] transition hover:bg-black"
                   >
-                    <Image
-                      src={certificate.image}
-                      alt={`${certificate.title} — ${certificate.issuer}`}
-                      width={960}
-                      height={720}
-                      className="h-auto w-full object-contain transition duration-500 group-hover:scale-[1.02]"
-                      sizes="(max-width: 768px) 100vw, 208px"
-                    />
+                    Verify credential <ExternalLink className="h-3.5 w-3.5" />
                   </a>
-                </div>
-              </article>
-            </Reveal>
-          ))}
+                ) : null}
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      ) : null}
     </section>
   );
 }
