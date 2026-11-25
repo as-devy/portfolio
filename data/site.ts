@@ -6,7 +6,7 @@ export const siteConfig: SiteConfig = {
   role: "Full Stack Developer · UI/UX Designer",
   title: "Omar Elbedwehy | Full-Stack Developer, UI/UX Designer & Security",
   description:
-    "Omar Elbedwehy is a full-stack developer, UI/UX designer, and security-focused engineer building scalable web applications.",
+    "Full-stack developer, UI/UX designer, and security-focused engineer building scalable web applications.",
   email: "omarelbedwehi@gmail.com",
   location: "Available worldwide",
   url: "https://omar-elbedwehy.vercel.app",
