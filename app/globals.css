@@ -212,7 +212,7 @@ body {
     transform: translateX(0);
   }
   to {
-    transform: translateX(-50%);
+    transform: translateX(calc(-100% / 6));
   }
 }
 
@@ -1008,7 +1008,7 @@ body {
   top: 0;
   width: min(42rem, 70%);
   height: 7rem;
-  transform: translateX(-50%);
+  transform: translateX(calc(-100% / 6));
   background: radial-gradient(
     ellipse 70% 100% at 50% 0%,
     rgba(34, 211, 238, 0.08),
@@ -1071,7 +1071,7 @@ body {
   height: 0.35rem;
   border-radius: 999px;
   background: rgba(34, 211, 238, 0.85);
-  transform: translateX(-50%);
+  transform: translateX(calc(-100% / 6));
   animation: scroll-wheel 1.6s ease-in-out infinite;
 }
 

@@ -17,7 +17,7 @@ export function Marquee({ items, className, speedSec = 36 }: MarqueeProps) {
         className="marquee-track"
         style={{ animationDuration: `${speedSec}s` }}
       >
-        {[0, 1].map((half) => (
+        {[0, 1, 2, 3, 4, 5].map((half) => (
           <div key={half} className="flex shrink-0 items-center">
             {items.map((item, index) => (
               <span key={`${half}-${index}`} className="flex items-center">
