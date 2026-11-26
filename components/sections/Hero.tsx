@@ -93,7 +93,7 @@ export function Hero() {
             </Reveal>
           </div>
 
-          <Reveal variant="scale" delayMs={220} durationMs={950} className="relative order-first lg:order-none">
+          <Reveal variant="scale" delayMs={220} durationMs={950} className="relative">
             <HeroPortrait />
           </Reveal>
         </div>
