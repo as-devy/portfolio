@@ -1,4 +1,5 @@
 import { ArrowUp, Mail } from "lucide-react";
+import { FooterGlobe } from "@/components/layout/FooterGlobe";
 import { GitHubIcon, LinkedInIcon } from "@/components/ui/BrandIcons";
 import { getVisibleNavigation } from "@/data/navigation";
 import { siteConfig } from "@/data/site";
@@ -20,6 +21,7 @@ export function SiteFooter() {
 
   return (
     <footer className="site-footer relative mt-2 overflow-hidden">
+      <FooterGlobe />
       <div aria-hidden className="site-footer-edge" />
 
       <div className="section-shell relative z-10 !pb-28 !pt-12 lg:!pb-14 lg:!pt-16">
