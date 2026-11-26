@@ -2,9 +2,6 @@
 
 import { useEffect, useRef } from "react";
 
-// Port Said, Egypt
-const HOME = { lat: 31.2653, lon: 32.3019 };
-
 export function FooterGlobe() {
   const wrapRef = useRef<HTMLDivElement>(null);
 
@@ -31,12 +28,8 @@ export function FooterGlobe() {
       renderer.setClearColor(0x000000, 0);
       renderer.outputColorSpace = THREE.SRGBColorSpace;
       const canvas = renderer.domElement;
-      canvas.className = "block h-full w-full cursor-grab touch-pan-y";
-      canvas.setAttribute("role", "img");
-      canvas.setAttribute(
-        "aria-label",
-        "Rotating 3D Earth centered on Port Said, Egypt",
-      );
+      canvas.className = "block h-full w-full";
+      canvas.setAttribute("aria-hidden", "true");
       wrap.appendChild(canvas);
 
       const scene = new THREE.Scene();
@@ -134,55 +127,20 @@ export function FooterGlobe() {
       );
       scene.add(atmo);
 
-      // home marker + pulse ring, attached to the globe
-      const phi = (90 - HOME.lat) * (Math.PI / 180);
-      const theta = (HOME.lon + 180) * (Math.PI / 180);
-      const R = 1.5;
-      const pos = new THREE.Vector3(
-        -R * Math.sin(phi) * Math.cos(theta),
-        R * Math.cos(phi),
-        R * Math.sin(phi) * Math.sin(theta),
-      );
-      const normal = pos.clone().normalize();
-      const pin = new THREE.Mesh(
-        new THREE.SphereGeometry(0.028, 16, 12),
-        new THREE.MeshBasicMaterial({ color: 0xffffff }),
-      );
-      pin.position.copy(normal).multiplyScalar(R * 1.004);
-      globe.add(pin);
-      const ringMat = new THREE.MeshBasicMaterial({
-        color: 0x22d3ee,
-        transparent: true,
-        side: THREE.DoubleSide,
-        depthWrite: false,
-      });
-      const ring = new THREE.Mesh(new THREE.RingGeometry(0.9, 1, 48), ringMat);
-      ring.position.copy(normal).multiplyScalar(R * 1.006);
-      ring.lookAt(normal.clone().multiplyScalar(10));
-      globe.add(ring);
-
-      // orient so Port Said faces the camera on load
-      const faceHome = new THREE.Quaternion().setFromUnitVectors(
-        normal,
+      // axial tilt, then slow spin around the polar axis
+      const baseQ = new THREE.Quaternion().setFromAxisAngle(
         new THREE.Vector3(0, 0, 1),
+        -0.41,
       );
-      const tilt = new THREE.Quaternion().setFromAxisAngle(
-        new THREE.Vector3(1, 0, 0),
-        0.28,
-      );
-      const baseQ = tilt.clone().multiply(faceHome);
-      let spin = 0;
-      let velocity = 0.0022;
-      let tiltY = 0;
+      let spin = 2.4;
+      let velocity = 0.0012;
+      
 
       const spinAxis = new THREE.Vector3(0, 1, 0);
+      const spinQ = new THREE.Quaternion();
       const applyRotation = () => {
-        const q = new THREE.Quaternion().setFromAxisAngle(spinAxis, spin);
-        const t = new THREE.Quaternion().setFromAxisAngle(
-          new THREE.Vector3(1, 0, 0),
-          tiltY,
-        );
-        globe.quaternion.copy(t).multiply(q).multiply(baseQ);
+        spinQ.setFromAxisAngle(spinAxis, spin);
+        globe.quaternion.copy(baseQ).multiply(spinQ);
       };
 
       const resize = () => {
@@ -198,18 +156,13 @@ export function FooterGlobe() {
 
       const renderOnce = () => {
         applyRotation();
-        const p = ((performance.now() / 1800) % 1);
-        ring.scale.setScalar(0.03 + p * 0.16);
-        ringMat.opacity = 0.8 * (1 - p);
         renderer.render(scene, camera);
       };
 
       let raf = 0;
       let visible = false;
       let last = 0;
-      let dragging = false;
-      let lx = 0;
-      let ly = 0;
+      const dragging = false;
 
       const frame = (now: number) => {
         raf = 0;
@@ -217,8 +170,7 @@ export function FooterGlobe() {
         const dt = last ? Math.min(now - last, 50) : 16;
         last = now;
         if (!dragging) {
-          velocity += (0.0022 - velocity) * 0.04;
-          tiltY += (0 - tiltY) * 0.03;
+          velocity += (0.0012 - velocity) * 0.04;
           spin += velocity * (dt / 16.67);
         }
         renderOnce();
@@ -254,33 +206,6 @@ export function FooterGlobe() {
       const ro = new ResizeObserver(resize);
       ro.observe(wrap);
 
-      const down = (e: PointerEvent) => {
-        dragging = true;
-        lx = e.clientX;
-        ly = e.clientY;
-        canvas.setPointerCapture(e.pointerId);
-        canvas.style.cursor = "grabbing";
-      };
-      const move = (e: PointerEvent) => {
-        if (!dragging) return;
-        const dx = e.clientX - lx;
-        const dy = e.clientY - ly;
-        lx = e.clientX;
-        ly = e.clientY;
-        velocity = dx * 0.005;
-        spin += dx * 0.005;
-        tiltY = Math.max(-0.7, Math.min(0.7, tiltY + dy * 0.004));
-        if (reduced.matches) renderOnce();
-      };
-      const up = () => {
-        dragging = false;
-        canvas.style.cursor = "grab";
-      };
-      canvas.addEventListener("pointerdown", down);
-      canvas.addEventListener("pointermove", move);
-      canvas.addEventListener("pointerup", up);
-      canvas.addEventListener("pointercancel", up);
-
       resize();
 
       cleanup = () => {
@@ -288,19 +213,12 @@ export function FooterGlobe() {
         io.disconnect();
         ro.disconnect();
         document.removeEventListener("visibilitychange", onVis);
-        canvas.removeEventListener("pointerdown", down);
-        canvas.removeEventListener("pointermove", move);
-        canvas.removeEventListener("pointerup", up);
-        canvas.removeEventListener("pointercancel", up);
         dayMap.dispose();
         nightMap.dispose();
         sphere.geometry.dispose();
         atmo.geometry.dispose();
         earthMat.dispose();
         (atmo.material as import("three").Material).dispose();
-        pin.geometry.dispose();
-        ring.geometry.dispose();
-        ringMat.dispose();
         renderer.dispose();
         canvas.remove();
       };
@@ -326,16 +244,16 @@ export function FooterGlobe() {
   }, []);
 
   return (
-    <div className="footer-globe relative mx-auto flex flex-col items-center">
+    <div
+      aria-hidden
+      className="footer-globe pointer-events-none absolute inset-0 overflow-hidden"
+    >
       <div
         ref={wrapRef}
-        className="footer-globe-stage relative aspect-square w-[min(94vw,480px)]"
+        className="footer-globe-stage absolute left-1/2 aspect-square w-[max(150vw,820px)] max-w-[1500px] -translate-x-1/2 opacity-0 transition-opacity duration-[1800ms] data-[ready=true]:opacity-[0.9] lg:w-[min(105vw,1400px)]"
+        style={{ top: "-4%" }}
       />
-      <p className="-mt-4 inline-flex items-center gap-2 font-mono text-[0.65rem] tracking-[0.18em] text-subtle uppercase">
-        <span aria-hidden className="h-px w-6 bg-accent/50" />
-        Port Said, Egypt · 31.26°N 32.30°E
-        <span aria-hidden className="h-px w-6 bg-accent/50" />
-      </p>
+      <div className="footer-globe-scrim absolute inset-0" />
     </div>
   );
 }

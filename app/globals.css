@@ -1555,3 +1555,9 @@ textarea.field {
   color: transparent;
   -webkit-text-stroke: 1.1px rgba(232, 237, 247, 0.85);
 }
+
+.footer-globe-scrim {
+  background:
+    linear-gradient(180deg, var(--bg) 0%, rgba(5, 7, 13, 0.25) 24%, rgba(5, 7, 13, 0.1) 60%, rgba(5, 7, 13, 0.45) 100%),
+    linear-gradient(90deg, rgba(5, 7, 13, 0.62) 0%, rgba(5, 7, 13, 0.2) 30%, rgba(5, 7, 13, 0.2) 70%, rgba(5, 7, 13, 0.55) 100%);
+}
