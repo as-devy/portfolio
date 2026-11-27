@@ -46,6 +46,7 @@
 }
 
 html {
+  overflow-y: scroll;
   scroll-behavior: smooth;
   scroll-padding-top: 1.5rem;
   scrollbar-width: thin;
@@ -1841,5 +1842,37 @@ textarea.field {
   }
   .sl-panel {
     transition-duration: 0.3s;
+  }
+}
+
+/* Content eases in as the loader curtain opens */
+.site-reveal,
+.site-reveal-fade {
+  transition:
+    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.15s,
+    transform 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.15s;
+}
+html[data-loader="loading"] .site-reveal,
+html[data-loader="granted"] .site-reveal {
+  opacity: 0;
+  transform: translateY(18px);
+}
+html[data-loader="loading"] .site-reveal-fade,
+html[data-loader="granted"] .site-reveal-fade {
+  opacity: 0;
+}
+html[data-loader="exit"] .site-reveal,
+html[data-loader="done"] .site-reveal {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-reveal,
+  .site-reveal-fade {
+    transition-duration: 0.01s;
+    transition-delay: 0s;
+  }
+  html[data-loader] .site-reveal {
+    transform: none;
   }
 }

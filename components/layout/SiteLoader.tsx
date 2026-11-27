@@ -93,12 +93,17 @@ export function SiteLoader() {
   }, []);
 
   useEffect(() => {
+    document.documentElement.dataset.loader = phase;
+  }, [phase]);
+
+  useEffect(() => {
+    // Keep the page pinned to the top while the loader is up. The scrollbar
+    // track stays visible (html has overflow-y: scroll), so nothing shifts
+    // when the loader closes.
     if (phase === "done") return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
+    const pin = () => window.scrollTo({ top: 0, behavior: "instant" });
+    window.addEventListener("scroll", pin, { passive: true });
+    return () => window.removeEventListener("scroll", pin);
   }, [phase]);
 
   if (phase === "done") return null;

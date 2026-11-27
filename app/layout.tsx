@@ -110,8 +110,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         >
           Skip to content
         </a>
-        {children}
-        <FloatingNav items={navItems} />
+        <div className="site-reveal">{children}</div>
+        <div className="site-reveal-fade">
+          <FloatingNav items={navItems} />
+        </div>
       </body>
     </html>
   );
