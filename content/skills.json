@@ -644,25 +644,6 @@
     }
   },
   {
-    "id": "ai-agents",
-    "label": "Agentic AI / AI Agents",
-    "category": "ai",
-    "layer": "ai",
-    "role": "AI",
-    "icon": "agents",
-    "emphasis": "primary",
-    "description": "Building agent-style workflows that plan, tool-call, and complete tasks.",
-    "related": [
-      "rag",
-      "vector-search",
-      "webmcp"
-    ],
-    "map": {
-      "x": 48,
-      "y": 12
-    }
-  },
-  {
     "id": "rag",
     "label": "RAG",
     "category": "ai",
@@ -672,12 +653,11 @@
     "description": "Retrieval-augmented generation for grounded, context-aware answers.",
     "related": [
       "vector-search",
-      "ai-agents",
       "pg"
     ],
     "map": {
       "x": 48,
-      "y": 25
+      "y": 12
     }
   },
   {
@@ -690,12 +670,11 @@
     "description": "Semantic retrieval over embeddings — the retrieval half of modern AI apps.",
     "related": [
       "rag",
-      "pg",
-      "ai-agents"
+      "pg"
     ],
     "map": {
       "x": 48,
-      "y": 37
+      "y": 27
     }
   },
   {
@@ -709,11 +688,11 @@
     "related": [
       "wasm",
       "webnn",
-      "ai-agents"
+      "webmcp"
     ],
     "map": {
       "x": 48,
-      "y": 50
+      "y": 42
     }
   },
   {
@@ -727,11 +706,11 @@
     "related": [
       "webgpu",
       "wasm",
-      "ai-agents"
+      "rag"
     ],
     "map": {
       "x": 48,
-      "y": 63
+      "y": 58
     }
   },
   {
@@ -745,11 +724,11 @@
     "related": [
       "webgpu",
       "webnn",
-      "ai-agents"
+      "webmcp"
     ],
     "map": {
       "x": 48,
-      "y": 75
+      "y": 73
     }
   },
   {
@@ -761,8 +740,9 @@
     "icon": "webmcp",
     "description": "Exposing website actions as tools so AI agents can use a site in a reliable, structured way.",
     "related": [
-      "ai-agents",
-      "rag"
+      "rag",
+      "vector-search",
+      "webgpu"
     ],
     "map": {
       "x": 48,
