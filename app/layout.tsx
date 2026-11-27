@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Instrument_Serif, Syne } from "next/font/google";
 import { FloatingNav } from "@/components/layout/FloatingNav";
+import { SiteLoader } from "@/components/layout/SiteLoader";
 import { ScrollProgress } from "@/components/layout/ScrollProgress";
 import { getVisibleNavigation } from "@/data/navigation";
 import { siteConfig } from "@/data/site";
@@ -92,7 +93,16 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${syne.variable} ${instrumentSerif.variable} h-full antialiased`}
     >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{if(sessionStorage.getItem('portfolio-loader-seen')==='1')document.documentElement.dataset.loaderSeen='1'}catch(e){}",
+          }}
+        />
+      </head>
       <body className="min-h-full font-sans text-foreground">
+        <SiteLoader />
         <ScrollProgress />
         <div className="site-bg" aria-hidden>
           <span className="site-orb site-orb-a" />
