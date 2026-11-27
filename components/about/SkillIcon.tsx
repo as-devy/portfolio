@@ -19,6 +19,7 @@ import {
   Sparkles,
   Table2,
   TestTube2,
+  Workflow,
   type LucideIcon,
 } from "lucide-react";
 import { GitHubIcon } from "@/components/ui/BrandIcons";
@@ -93,6 +94,7 @@ const lucideIconMap: Partial<Record<SkillIconId, LucideIcon>> = {
   owasp: ShieldCheck,
   webnn: BrainCircuit,
   webmcp: PlugZap,
+  cicd: Workflow,
   ux: LayoutTemplate,
   a11y: Accessibility,
   testing: TestTube2,

@@ -62,6 +62,7 @@ export type SkillIcon =
   | "webnn"
   | "wasm"
   | "webmcp"
+  | "cicd"
   | "git"
   | "github"
   | "docker"
