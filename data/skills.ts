@@ -493,25 +493,25 @@ export const identityAxes = [
     id: "fullstack",
     title: "Full-stack thinking",
     lead: "From interface to infrastructure.",
-    copy: "I built a live travel platform end to end (Next.js, PostgreSQL, auth, maps) so the whole product works as one system, not stitched parts.",
+    copy: "I work across the whole stack, so I can see how a decision in the interface affects the database and the other way around. I'd rather design one system that fits together than stitch parts.",
   },
   {
     id: "product-ux",
     title: "Product & UI/UX",
     lead: "Technology should feel intuitive.",
-    copy: "I led design and development on real products — a travel booking platform and a pet-adoption app mentored with UWE Bristol — keeping interfaces clear and purposeful.",
+    copy: "I start from the person using it. I design and build the interface myself, so clarity, spacing, and small details don't get lost between design and code.",
   },
   {
     id: "security",
     title: "Security mindset",
     lead: "Build it. Then challenge it.",
-    copy: "I built and mentored attack scenarios in a controlled MFA lab (brute force, MFA fatigue, session hijacking), detected and auto-blocked with Wazuh SIEM — work submitted to NCSC.",
+    copy: "I think like an attacker while I build: validate inputs, assume things will fail, and test the weak points before someone else does. Security is part of the design, not a final step.",
   },
   {
     id: "problem-solving",
     title: "Problem solving",
     lead: "Algorithms under pressure.",
-    copy: "I train competitive programming through ICPC, keeping the algorithmic core behind my engineering sharp.",
+    copy: "I train competitive programming through ICPC, which keeps my thinking structured: break the problem down, find the simplest approach that works, then make it fast.",
   },
 ] as const;
 

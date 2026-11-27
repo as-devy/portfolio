@@ -67,9 +67,10 @@ export function Manifesto() {
         ))}
       </p>
       <p className="mt-8 max-w-xl text-base leading-relaxed text-[color:var(--ink-soft)] md:text-lg">
-        I build full-stack digital products where engineering, interface
-        design, and security work together, from the first interaction to the
-        systems underneath.
+        I&apos;ve been building for the web for about three years, across front
+        end, back end, and design. I like owning a product end to end, and I
+        care as much about how it feels to use as how it holds up under
+        pressure.
       </p>
     </div>
   );
