@@ -1639,8 +1639,12 @@ textarea.field {
   transform: scale(0.96);
   transition: opacity 0.35s ease, transform 0.5s ease;
 }
+/* HUD uses a fill-forwards entrance animation, which would override a plain
+   opacity transition, so fade it out with its own keyframes. */
 .site-loader[data-phase="exit"] .sl-hud {
   transform: none;
+  transition: none;
+  animation: sl-out 0.75s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .sl-hud {
@@ -1814,6 +1818,7 @@ textarea.field {
 }
 
 @keyframes sl-in { to { opacity: 1; } }
+@keyframes sl-out { from { opacity: 1; } to { opacity: 0; } }
 @keyframes sl-pop { to { opacity: 1; transform: none; } }
 @keyframes sl-draw { to { stroke-dashoffset: 0; } }
 @keyframes sl-code { to { stroke-dashoffset: 0; } }
@@ -1839,6 +1844,10 @@ textarea.field {
     animation: none;
     opacity: 1;
     transform: none;
+  }
+  .site-loader[data-phase="exit"] .sl-hud {
+    animation: none;
+    opacity: 0;
   }
   .sl-panel {
     transition-duration: 0.3s;
