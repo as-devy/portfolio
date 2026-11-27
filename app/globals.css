@@ -1563,10 +1563,6 @@ textarea.field {
 }
 
 /* ---------- Site loader ---------- */
-html[data-loader-seen="1"] .site-loader {
-  display: none;
-}
-
 .site-loader {
   position: fixed;
   inset: 0;

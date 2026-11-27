@@ -93,14 +93,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${syne.variable} ${instrumentSerif.variable} h-full antialiased`}
     >
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html:
-              "try{if(sessionStorage.getItem('portfolio-loader-seen')==='1')document.documentElement.dataset.loaderSeen='1'}catch(e){}",
-          }}
-        />
-      </head>
       <body className="min-h-full font-sans text-foreground">
         <SiteLoader />
         <ScrollProgress />

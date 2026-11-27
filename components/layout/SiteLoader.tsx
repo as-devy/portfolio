@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 
-const SEEN_KEY = "portfolio-loader-seen";
 const MIN_MS = 1400;
 const MAX_MS = 8000;
 const EXIT_MS = 650;
@@ -20,11 +19,6 @@ export function SiteLoader() {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    if (document.documentElement.dataset.loaderSeen === "1") {
-      const t = window.setTimeout(() => setPhase("done"), 0);
-      return () => window.clearTimeout(t);
-    }
-
     const start = performance.now();
     let loaded = document.readyState === "complete";
     let finished = false;
@@ -39,9 +33,6 @@ export function SiteLoader() {
         window.setTimeout(() => setPhase("exit"), 650),
         window.setTimeout(() => {
           setPhase("done");
-          try {
-            sessionStorage.setItem(SEEN_KEY, "1");
-          } catch {}
         }, 650 + EXIT_MS),
       );
     };
