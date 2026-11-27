@@ -154,7 +154,7 @@ export function SiteLoader() {
           <svg viewBox="0 0 120 140" className="sl-shield">
             <defs>
               <linearGradient id="slg" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stopColor="#22d3ee" />
+                <stop offset="0" stopColor="#38bdf8" />
                 <stop offset="1" stopColor="#7c6cff" />
               </linearGradient>
             </defs>

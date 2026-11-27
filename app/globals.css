@@ -1581,7 +1581,7 @@ textarea.field {
   right: 0;
   height: 50.5%;
   background:
-    radial-gradient(70% 90% at 50% 100%, rgba(34, 211, 238, 0.09), transparent 70%),
+    radial-gradient(70% 90% at 50% 100%, rgba(59, 130, 246, 0.16), transparent 72%),
     var(--bg);
   transition: transform 0.95s var(--sl-ease);
 }
@@ -1604,7 +1604,7 @@ textarea.field {
 .sl-panel-bottom {
   bottom: 0;
   background:
-    radial-gradient(70% 90% at 50% 0%, rgba(124, 108, 255, 0.08), transparent 70%),
+    radial-gradient(70% 90% at 50% 0%, rgba(59, 130, 246, 0.16), transparent 72%),
     var(--bg);
 }
 .sl-panel-bottom::after {
@@ -1617,7 +1617,7 @@ textarea.field {
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.55), transparent);
+  background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.7), transparent);
   opacity: 0;
   transition: opacity 0.4s ease;
 }
@@ -1694,7 +1694,7 @@ textarea.field {
   position: absolute;
   inset: 12%;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(34, 211, 238, 0.2), transparent 68%);
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.34), transparent 68%);
   filter: blur(14px);
   animation: sl-breathe 2.6s ease-in-out infinite;
 }
@@ -1719,10 +1719,10 @@ textarea.field {
 }
 .sl-ring-arc {
   fill: none;
-  stroke: var(--accent);
+  stroke: #38bdf8;
   stroke-width: 2.5;
   stroke-linecap: round;
-  filter: drop-shadow(0 0 5px var(--glow));
+  filter: drop-shadow(0 0 5px rgba(56, 189, 248, 0.45));
 }
 
 .sl-shield {
@@ -1734,14 +1734,14 @@ textarea.field {
   overflow: visible;
 }
 .sl-shield-path {
-  fill: rgba(34, 211, 238, 0.07);
+  fill: rgba(56, 189, 248, 0.1);
   stroke: url(#slg);
   stroke-width: 2.5;
   stroke-linejoin: round;
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
   animation: sl-draw 1.3s var(--sl-ease) 0.2s forwards;
-  filter: drop-shadow(0 0 8px var(--glow));
+  filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.45));
 }
 .sl-code path {
   fill: none;
@@ -1814,7 +1814,7 @@ textarea.field {
   height: 100%;
   transform-origin: left;
   background: linear-gradient(90deg, var(--accent-blue), var(--accent), var(--accent-violet));
-  box-shadow: 0 0 12px var(--glow);
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.45);
 }
 
 @keyframes sl-in { to { opacity: 1; } }
