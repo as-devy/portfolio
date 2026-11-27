@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Instrument_Serif, Syne } from "next/font/google";
 import { FloatingNav } from "@/components/layout/FloatingNav";
+import { SiteLoader } from "@/components/layout/SiteLoader";
 import { ScrollProgress } from "@/components/layout/ScrollProgress";
 import { getVisibleNavigation } from "@/data/navigation";
 import { siteConfig } from "@/data/site";
@@ -93,6 +94,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} ${syne.variable} ${instrumentSerif.variable} h-full antialiased`}
     >
       <body className="min-h-full font-sans text-foreground">
+        <SiteLoader />
         <ScrollProgress />
         <div className="site-bg" aria-hidden>
           <span className="site-orb site-orb-a" />
@@ -108,8 +110,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         >
           Skip to content
         </a>
-        {children}
-        <FloatingNav items={navItems} />
+        <div className="site-reveal">{children}</div>
+        <div className="site-reveal-fade">
+          <FloatingNav items={navItems} />
+        </div>
       </body>
     </html>
   );

@@ -46,6 +46,7 @@
 }
 
 html {
+  overflow-y: scroll;
   scroll-behavior: smooth;
   scroll-padding-top: 1.5rem;
   scrollbar-width: thin;
@@ -1560,4 +1561,327 @@ textarea.field {
   background:
     linear-gradient(180deg, var(--bg) 0%, rgba(5, 7, 13, 0.25) 24%, rgba(5, 7, 13, 0.1) 60%, rgba(5, 7, 13, 0.45) 100%),
     linear-gradient(90deg, rgba(5, 7, 13, 0.62) 0%, rgba(5, 7, 13, 0.2) 30%, rgba(5, 7, 13, 0.2) 70%, rgba(5, 7, 13, 0.55) 100%);
+}
+
+/* ---------- Site loader ---------- */
+.site-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  --sl-ease: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.sl-panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 50.5%;
+  background:
+    radial-gradient(70% 90% at 50% 100%, rgba(59, 130, 246, 0.16), transparent 72%),
+    var(--bg);
+  transition: transform 0.95s var(--sl-ease);
+}
+.sl-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(60% 100% at 50% 50%, #000, transparent 85%);
+}
+.sl-panel-top {
+  top: 0;
+}
+.sl-panel-top::after {
+  mask-image: radial-gradient(60% 100% at 50% 100%, #000, transparent 85%);
+}
+.sl-panel-bottom {
+  bottom: 0;
+  background:
+    radial-gradient(70% 90% at 50% 0%, rgba(59, 130, 246, 0.16), transparent 72%),
+    var(--bg);
+}
+.sl-panel-bottom::after {
+  mask-image: radial-gradient(60% 100% at 50% 0%, #000, transparent 85%);
+}
+.sl-panel-top::before,
+.sl-panel-bottom::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.7), transparent);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.sl-panel-top::before { bottom: 0; }
+.sl-panel-bottom::before { top: 0; }
+
+.site-loader[data-phase="granted"] .sl-panel::before {
+  opacity: 1;
+}
+.site-loader[data-phase="exit"] .sl-panel-top {
+  transform: translateY(-101%);
+}
+.site-loader[data-phase="exit"] .sl-panel-bottom {
+  transform: translateY(101%);
+}
+.site-loader[data-phase="exit"] .sl-stage,
+.site-loader[data-phase="exit"] .sl-hud {
+  opacity: 0;
+  transform: scale(0.96);
+  transition: opacity 0.35s ease, transform 0.5s ease;
+}
+/* HUD uses a fill-forwards entrance animation, which would override a plain
+   opacity transition, so fade it out with its own keyframes. */
+.site-loader[data-phase="exit"] .sl-hud {
+  transform: none;
+  transition: none;
+  animation: sl-out 0.75s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.sl-hud {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.64rem;
+  letter-spacing: 0.2em;
+  color: var(--fg-subtle);
+  opacity: 0;
+  animation: sl-in 0.8s ease 0.3s forwards;
+}
+.sl-hud-tl { top: 1.5rem; left: 1.5rem; }
+.sl-hud-tr { top: 1.5rem; right: 1.5rem; }
+.sl-hud-bl { bottom: 1.5rem; left: 1.5rem; }
+.sl-hud-br { bottom: 1.5rem; right: 1.5rem; color: var(--accent); font-variant-numeric: tabular-nums; }
+.sl-hud i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+  animation: sl-blink 1.4s ease-in-out infinite;
+}
+
+.sl-stage {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(86vw, 24rem);
+}
+
+.sl-emblem {
+  position: relative;
+  width: 11rem;
+  height: 11rem;
+  margin-bottom: 1.8rem;
+  opacity: 0;
+  transform: scale(0.92);
+  animation: sl-pop 0.9s var(--sl-ease) 0.05s forwards;
+}
+.sl-emblem::before {
+  content: "";
+  position: absolute;
+  inset: 12%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.34), transparent 68%);
+  filter: blur(14px);
+  animation: sl-breathe 2.6s ease-in-out infinite;
+}
+.sl-ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.sl-ring-ticks {
+  fill: none;
+  stroke: rgba(232, 237, 247, 0.28);
+  stroke-width: 5;
+  stroke-dasharray: 1 9.6;
+  transform-origin: 90px 90px;
+  animation: sl-spin 22s linear infinite;
+}
+.sl-ring-track {
+  fill: none;
+  stroke: rgba(232, 237, 247, 0.07);
+  stroke-width: 2;
+}
+.sl-ring-arc {
+  fill: none;
+  stroke: #38bdf8;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 5px rgba(56, 189, 248, 0.45));
+}
+
+.sl-shield {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 5.2rem;
+  height: auto;
+  overflow: visible;
+}
+.sl-shield-path {
+  fill: rgba(56, 189, 248, 0.1);
+  stroke: url(#slg);
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: sl-draw 1.3s var(--sl-ease) 0.2s forwards;
+  filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.45));
+}
+.sl-code path {
+  fill: none;
+  stroke: var(--fg);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 60;
+  stroke-dashoffset: 60;
+  animation: sl-code 0.7s ease 0.9s forwards;
+}
+.sl-code path:nth-child(3) {
+  stroke: var(--accent);
+  animation-delay: 1.1s;
+}
+
+.sl-title {
+  margin: 0;
+  min-height: 2.2rem;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.5rem, 5.4vw, 2rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  white-space: pre;
+  color: var(--fg);
+  font-variant-numeric: tabular-nums;
+}
+.sl-role {
+  margin: 0.45rem 0 2.1rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  opacity: 0;
+  animation: sl-in 0.8s ease 0.6s forwards;
+}
+
+.sl-status {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 0 0.9rem;
+  min-height: 1.1rem;
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+.sl-status-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.sl-cursor {
+  width: 7px;
+  height: 0.95em;
+  background: var(--accent);
+  animation: sl-blink 0.9s steps(1) infinite;
+}
+
+.sl-bar {
+  width: 100%;
+  height: 2px;
+  background: rgba(232, 237, 247, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.sl-bar span {
+  display: block;
+  height: 100%;
+  transform-origin: left;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent), var(--accent-violet));
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.45);
+}
+
+@keyframes sl-in { to { opacity: 1; } }
+@keyframes sl-out { from { opacity: 1; } to { opacity: 0; } }
+@keyframes sl-pop { to { opacity: 1; transform: none; } }
+@keyframes sl-draw { to { stroke-dashoffset: 0; } }
+@keyframes sl-code { to { stroke-dashoffset: 0; } }
+@keyframes sl-spin { to { transform: rotate(360deg); } }
+@keyframes sl-blink { 50% { opacity: 0.2; } }
+@keyframes sl-breathe { 50% { opacity: 0.55; transform: scale(1.08); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .sl-ring-ticks,
+  .sl-emblem::before,
+  .sl-hud i,
+  .sl-cursor {
+    animation: none;
+  }
+  .sl-shield-path,
+  .sl-code path {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+  .sl-hud,
+  .sl-role,
+  .sl-emblem {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  .site-loader[data-phase="exit"] .sl-hud {
+    animation: none;
+    opacity: 0;
+  }
+  .sl-panel {
+    transition-duration: 0.3s;
+  }
+}
+
+/* Content eases in as the loader curtain opens */
+.site-reveal,
+.site-reveal-fade {
+  transition:
+    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.15s,
+    transform 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.15s;
+}
+html[data-loader="loading"] .site-reveal,
+html[data-loader="granted"] .site-reveal {
+  opacity: 0;
+  transform: translateY(18px);
+}
+html[data-loader="loading"] .site-reveal-fade,
+html[data-loader="granted"] .site-reveal-fade {
+  opacity: 0;
+}
+html[data-loader="exit"] .site-reveal,
+html[data-loader="done"] .site-reveal {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-reveal,
+  .site-reveal-fade {
+    transition-duration: 0.01s;
+    transition-delay: 0s;
+  }
+  html[data-loader] .site-reveal {
+    transform: none;
+  }
 }

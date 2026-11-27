@@ -457,7 +457,7 @@
     ],
     "map": {
       "x": 86,
-      "y": 24
+      "y": 15
     }
   },
   {
@@ -476,7 +476,7 @@
     ],
     "map": {
       "x": 86,
-      "y": 42
+      "y": 29
     }
   },
   {
@@ -495,7 +495,61 @@
     ],
     "map": {
       "x": 86,
-      "y": 78
+      "y": 43
+    }
+  },
+  {
+    "id": "burp-suite",
+    "label": "Burp Suite",
+    "category": "security",
+    "layer": "security",
+    "role": "Web Testing",
+    "icon": "burp",
+    "description": "Intercepting proxy for inspecting and testing web application traffic.",
+    "related": [
+      "owasp",
+      "api-security",
+      "jwt-oauth"
+    ],
+    "map": {
+      "x": 86,
+      "y": 57
+    }
+  },
+  {
+    "id": "nmap",
+    "label": "Nmap",
+    "category": "security",
+    "layer": "security",
+    "role": "Recon",
+    "icon": "nmap",
+    "description": "Network discovery and port scanning to map what is exposed.",
+    "related": [
+      "owasp",
+      "burp-suite",
+      "kali"
+    ],
+    "map": {
+      "x": 86,
+      "y": 71
+    }
+  },
+  {
+    "id": "kali",
+    "label": "Kali Linux",
+    "category": "security",
+    "layer": "security",
+    "role": "Pentest OS",
+    "icon": "kali",
+    "description": "Security-focused Linux distribution used for testing and assessment work.",
+    "related": [
+      "nmap",
+      "burp-suite",
+      "owasp"
+    ],
+    "map": {
+      "x": 86,
+      "y": 85
     }
   },
   {
@@ -572,23 +626,39 @@
     }
   },
   {
-    "id": "ai-agents",
-    "label": "Agentic AI / AI Agents",
-    "category": "ai",
-    "layer": "ai",
-    "role": "AI",
-    "icon": "agents",
-    "emphasis": "primary",
-    "description": "Building agent-style workflows that plan, tool-call, and complete tasks.",
+    "id": "linux",
+    "label": "Linux",
+    "category": "devops",
+    "layer": "devops",
+    "role": "Operating System",
+    "icon": "linux",
+    "description": "Command-line fluency and the OS that most servers and security tools run on.",
     "related": [
-      "rag",
-      "vector-search",
-      "openrouter",
-      "prompt"
+      "docker",
+      "git",
+      "kubernetes"
     ],
     "map": {
-      "x": 48,
-      "y": 18
+      "x": 50,
+      "y": 88
+    }
+  },
+  {
+    "id": "cicd",
+    "label": "CI/CD",
+    "category": "devops",
+    "layer": "devops",
+    "role": "Automation",
+    "icon": "cicd",
+    "description": "Automated build, test, and deploy pipelines that ship changes safely and often.",
+    "related": [
+      "git",
+      "github",
+      "docker"
+    ],
+    "map": {
+      "x": 80,
+      "y": 88
     }
   },
   {
@@ -601,13 +671,11 @@
     "description": "Retrieval-augmented generation for grounded, context-aware answers.",
     "related": [
       "vector-search",
-      "ai-agents",
-      "openrouter",
       "pg"
     ],
     "map": {
       "x": 48,
-      "y": 32
+      "y": 12
     }
   },
   {
@@ -620,63 +688,79 @@
     "description": "Semantic retrieval over embeddings — the retrieval half of modern AI apps.",
     "related": [
       "rag",
-      "huggingface",
-      "pg",
-      "ai-agents"
+      "pg"
     ],
     "map": {
       "x": 48,
-      "y": 46
+      "y": 27
     }
   },
   {
-    "id": "prompt",
-    "label": "Prompt Engineering",
+    "id": "webgpu",
+    "label": "WebGPU",
     "category": "ai",
     "layer": "ai",
-    "role": "AI",
-    "icon": "prompt",
-    "description": "Structuring prompts and tool instructions so model output stays reliable.",
+    "role": "Browser GPU",
+    "icon": "webgpu",
+    "description": "Direct GPU access in the browser for fast graphics and running AI models on the user's device.",
     "related": [
-      "ai-agents",
-      "openrouter",
+      "wasm",
+      "webnn",
+      "webmcp"
+    ],
+    "map": {
+      "x": 48,
+      "y": 42
+    }
+  },
+  {
+    "id": "webnn",
+    "label": "WebNN",
+    "category": "ai",
+    "layer": "ai",
+    "role": "Browser ML",
+    "icon": "webnn",
+    "description": "Web Neural Network API for hardware-accelerated model inference in the browser.",
+    "related": [
+      "webgpu",
+      "wasm",
       "rag"
     ],
     "map": {
       "x": 48,
-      "y": 60
+      "y": 58
     }
   },
   {
-    "id": "openrouter",
-    "label": "OpenRouter",
+    "id": "wasm",
+    "label": "WebAssembly",
     "category": "ai",
     "layer": "ai",
-    "role": "AI API",
-    "icon": "openrouter",
-    "description": "Multi-model API access for integrating LLMs into application backends.",
+    "role": "Runtime",
+    "icon": "wasm",
+    "description": "Near-native compiled code in the browser, used to run heavy compute and models client-side.",
     "related": [
-      "ai-agents",
-      "rag",
-      "prompt"
+      "webgpu",
+      "webnn",
+      "webmcp"
     ],
     "map": {
       "x": 48,
-      "y": 74
+      "y": 73
     }
   },
   {
-    "id": "huggingface",
-    "label": "Hugging Face",
+    "id": "webmcp",
+    "label": "WebMCP",
     "category": "ai",
     "layer": "ai",
-    "role": "AI",
-    "icon": "huggingface",
-    "description": "Models and tooling for experimenting with and shipping AI features.",
+    "role": "Agent Tools",
+    "icon": "webmcp",
+    "description": "Exposing website actions as tools so AI agents can use a site in a reliable, structured way.",
     "related": [
-      "vector-search",
       "rag",
-      "ai-agents"
+      "vector-search",
+      "webgpu"
     ],
     "map": {
       "x": 48,

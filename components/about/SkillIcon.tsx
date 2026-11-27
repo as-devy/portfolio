@@ -2,8 +2,8 @@ import {
   Accessibility,
   Binary,
   Bot,
-  Boxes,
   Brain,
+  BrainCircuit,
   CircuitBoard,
   Gauge,
   Globe,
@@ -11,6 +11,7 @@ import {
   LayoutTemplate,
   MessageSquareCode,
   Network,
+  PlugZap,
   Radio,
   Share2,
   Shield,
@@ -18,11 +19,13 @@ import {
   Sparkles,
   Table2,
   TestTube2,
+  Workflow,
   type LucideIcon,
 } from "lucide-react";
 import { GitHubIcon } from "@/components/ui/BrandIcons";
 import {
   BootstrapBrandIcon,
+  BurpBrandIcon,
   CssBrandIcon,
   DockerBrandIcon,
   ExpressBrandIcon,
@@ -31,15 +34,20 @@ import {
   GraphQLBrandIcon,
   HtmlBrandIcon,
   JavaScriptBrandIcon,
+  KaliBrandIcon,
   KubernetesBrandIcon,
+  LinuxBrandIcon,
   MongoBrandIcon,
   NextBrandIcon,
+  NmapBrandIcon,
   NodeBrandIcon,
   PostgresBrandIcon,
   PrismaBrandIcon,
   ReactBrandIcon,
   TailwindBrandIcon,
   TypeScriptBrandIcon,
+  WasmBrandIcon,
+  WebGpuBrandIcon,
 } from "@/components/ui/TechBrandIcons";
 import type { SkillIcon as SkillIconId } from "@/types";
 import { cn } from "@/lib/utils";
@@ -68,6 +76,12 @@ const brandIconMap: Partial<Record<SkillIconId, BrandIcon>> = {
   kubernetes: KubernetesBrandIcon,
   git: GitBrandIcon,
   github: GitHubIcon,
+  burp: BurpBrandIcon,
+  nmap: NmapBrandIcon,
+  kali: KaliBrandIcon,
+  linux: LinuxBrandIcon,
+  wasm: WasmBrandIcon,
+  webgpu: WebGpuBrandIcon,
 };
 
 /** Lucide fallbacks for conceptual / non-brand skills */
@@ -78,7 +92,9 @@ const lucideIconMap: Partial<Record<SkillIconId, LucideIcon>> = {
   security: Shield,
   auth: KeyRound,
   owasp: ShieldCheck,
-  linux: Boxes,
+  webnn: BrainCircuit,
+  webmcp: PlugZap,
+  cicd: Workflow,
   ux: LayoutTemplate,
   a11y: Accessibility,
   testing: TestTube2,
